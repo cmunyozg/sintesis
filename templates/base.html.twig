@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}Síntesis
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+</head>
+
+<body class="container-fluid">
+
+    <!-- HEADER FIXED -->
+    <div class="headerFixed row justify-content-around oculto">
+        <!-- LOGO -->
+        <div class="d-flex col-auto align-items-center"><img src="{{ asset('img/logo-negro.png') }}" height="70px"
+                alt="" srcset="">
+        </div>
+        <!-- NAV -->
+        <nav class="d-flex navFixed navbar navbar-expand align-self-center">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item dropdown mx-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        CATEGORÍAS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Conciertos</a>
+                        <a class="dropdown-item" href="#">Fiesta Nocturna</a>
+                        <a class="dropdown-item" href="#">Gastronomía</a>
+                        <a class="dropdown-item" href="#">Teatro</a>
+                        <a class="dropdown-item" href="#">Monólogos</a>
+                        <a class="dropdown-item" href="#">Cultura y Arte</a>
+                        <a class="dropdown-item" href="#">Deporte y Salud</a>
+                        <a class="dropdown-item" href="#">Otros</a>
+                    </div>
+                </li>
+
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="#">PUBLICAR EVENTO</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="nav-link" href="#">INICIAR SESIÓN</a>
+                </li>
+
+
+            </ul>
+
+
+        </nav>
+    </div>
+
+    <!-- HEADER -->
+    <header class="row justify-content-around">
+        <!-- LOGO -->
+        <div class="d-flex col-auto align-items-center"><img src="{{ asset('img/logo.png') }}" alt="" srcset=""></div>
+        <!-- NAV -->
+        <nav class="navHeader navbar navbar-expand align-self-center">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item dropdown mx-1">
+                    <a class="navLinkHeader nav-link text-white dropdown-toggle" href="#" id="navbarDropdown"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        CATEGORÍAS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Conciertos</a>
+                        <a class="dropdown-item" href="#">Fiesta Nocturna</a>
+                        <a class="dropdown-item" href="#">Gastronomía</a>
+                        <a class="dropdown-item" href="#">Teatro</a>
+                        <a class="dropdown-item" href="#">Monólogos</a>
+                        <a class="dropdown-item" href="#">Cultura y Arte</a>
+                        <a class="dropdown-item" href="#">Deporte y Salud</a>
+                        <a class="dropdown-item" href="#">Otros</a>
+                    </div>
+                </li>
+
+                <li class="nav-item mx-1">
+                    <a class="navLinkHeader nav-link text-white" href="#">PUBLICAR EVENTO</a>
+                </li>
+                <li class="nav-item mx-1">
+                    <a class="navLinkHeader nav-link text-white btnSesion" href="#">INICIAR SESIÓN</a>
+                </li>
+
+
+            </ul>
+
+
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="row justify-content-center"> {% block contenido %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="row">
+        <div class="col-12">
+            <h4 class="mt-3"><img src="{{ asset('img/logo-negro.png') }}" height="40px" alt="" srcset="">© 2020
+            </h4>
+            <img class="mx-2" src="{{ asset('img/facebook.png') }}" height="35px" alt="" srcset="">
+            <img class="mx-2" src="{{ asset('img/instagram.png') }}" height="35px" alt="" srcset="">
+            <img class="mx-2" src="{{ asset('img/twitter.png') }}" height="35px" alt="" srcset="">
+            <p class="mt-2">
+                <a href="">Ver términos y condiciones</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/headerFixed.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+
+</html>

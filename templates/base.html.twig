@@ -30,16 +30,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         CATEGORÍAS
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Conciertos</a>
-                        <a class="dropdown-item" href="#">Fiesta Nocturna</a>
-                        <a class="dropdown-item" href="#">Gastronomía</a>
-                        <a class="dropdown-item" href="#">Teatro</a>
-                        <a class="dropdown-item" href="#">Monólogos</a>
-                        <a class="dropdown-item" href="#">Cultura y Arte</a>
-                        <a class="dropdown-item" href="#">Deporte y Salud</a>
-                        <a class="dropdown-item" href="#">Otros</a>
-                    </div>
+                    {{ render(controller('App\\Controller\\PrincipalController::categoriasMenu')) }}
                 </li>
 
                 <li class="nav-item mx-1">
@@ -70,16 +61,7 @@
                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         CATEGORÍAS
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Conciertos</a>
-                        <a class="dropdown-item" href="#">Fiesta Nocturna</a>
-                        <a class="dropdown-item" href="#">Gastronomía</a>
-                        <a class="dropdown-item" href="#">Teatro</a>
-                        <a class="dropdown-item" href="#">Monólogos</a>
-                        <a class="dropdown-item" href="#">Cultura y Arte</a>
-                        <a class="dropdown-item" href="#">Deporte y Salud</a>
-                        <a class="dropdown-item" href="#">Otros</a>
-                    </div>
+                    {{ render(controller('App\\Controller\\PrincipalController::categoriasMenu')) }}
                 </li>
 
                 <li class="nav-item mx-1">

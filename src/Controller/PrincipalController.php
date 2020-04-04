@@ -1,23 +1,21 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 
-class BuscadorController extends AbstractController
+class PrincipalController extends AbstractController
 {
     /**
-     * @Route("/buscador", name="buscador")
+     * Obtiene las categorias de la BBDD para renderizarlas por Twig en el DropItem del menú
      */
-    public function index()
+    public function categoriasMenu()
     {
         $em = $this->getDoctrine()->getManager();
         $categorias = $em->getRepository(Categoria::class)->findAll();
 
-        return $this->render('buscador/index.html.twig', [
-            
+        return $this->render('categoriasMenu.html.twig', [
+            'categorias' => $categorias
         ]);
     }
 }

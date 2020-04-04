@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     message="Ya existe una cuenta con el usuario especificado."
  * )
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -271,4 +272,31 @@ class Usuario
 
         return $this;
     }
+        // UserInterface
+
+        public function getRoles()
+        {
+            if ($this->rol === 0) return array('ROLE_USER');
+            else return array('ROLE_ADMIN');
+        }
+    
+        public function getPassword()
+        {
+            return $this->getPasswd();
+        }
+    
+        public function getSalt()
+        {
+            return;
+        }
+    
+        public function getUsername()
+        {
+            return $this->getAlias();
+        }
+        public function eraseCredentials()
+        {
+            return;
+        }
+    
 }

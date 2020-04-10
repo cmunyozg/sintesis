@@ -62,9 +62,7 @@ class Usuario implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(
-     *     message = "Campo requerido."
-     * )
+     * 
      */
     private $passwd;
 
@@ -272,31 +270,30 @@ class Usuario implements UserInterface
 
         return $this;
     }
-        // UserInterface
+    // UserInterface
 
-        public function getRoles()
-        {
-            if ($this->rol === 0) return array('ROLE_USER');
-            else return array('ROLE_ADMIN');
-        }
-    
-        public function getPassword()
-        {
-            return $this->getPasswd();
-        }
-    
-        public function getSalt()
-        {
-            return;
-        }
-    
-        public function getUsername()
-        {
-            return $this->getAlias();
-        }
-        public function eraseCredentials()
-        {
-            return;
-        }
-    
+    public function getRoles()
+    {
+        if ($this->rol === 0) return array('ROLE_USER');
+        else return array('ROLE_ADMIN');
+    }
+
+    public function getPassword()
+    {
+        return $this->getPasswd();
+    }
+
+    public function getSalt()
+    {
+        return;
+    }
+
+    public function getUsername()
+    {
+        return $this->getAlias();
+    }
+    public function eraseCredentials()
+    {
+        return;
+    }
 }

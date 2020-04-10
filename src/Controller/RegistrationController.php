@@ -24,11 +24,26 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $alias = $form['alias']->getData();
+            $nombre = $form['nombre']->getData();
+            $email = $form['email']->getData();
+            $plainPassword = $form['plainPassword']->getData();
+            $fechaNacimiento = $form['fechaNacimiento']->getData();
+            $fechaRegistro = new \DateTime();
+
+            $user->setAlias($alias)
+                ->setNombre($nombre)
+                ->setEmail($email)
+                ->setFechaNacimiento($fechaNacimiento)
+                ->setFechaRegistro($fechaRegistro)
+                ->setRol(0);
+
             // encode the plain password
             $user->setPasswd(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $plainPassword
                 )
             );
 

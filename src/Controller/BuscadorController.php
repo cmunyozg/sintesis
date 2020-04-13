@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BuscadorController extends AbstractController
 {
     /**
-     * @Route("/buscador", name="buscador")
+     * @Route("/buscador", name="buscador_index")
      */
     public function index()
     {

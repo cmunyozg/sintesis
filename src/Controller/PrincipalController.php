@@ -14,7 +14,7 @@ class PrincipalController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $categorias = $em->getRepository(Categoria::class)->findAll();
 
-        return $this->render('categoriasMenu.html.twig', [
+        return $this->render('_categorias_menu.html.twig', [
             'categorias' => $categorias
         ]);
     }

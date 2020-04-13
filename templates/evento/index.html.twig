@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evento index{% endblock %}
+
+{% block contenido %}
+    <h1>Evento index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>FechaInicio</th>
+                <th>FechaFin</th>
+                <th>Hora</th>
+                <th>Ubicacion</th>
+                <th>Coordenadas</th>
+                <th>Precio</th>
+                <th>Descripcion</th>
+                <th>Imagen</th>
+                <th>Web</th>
+                <th>Visible</th>
+                <th>Bloqueado</th>
+                <th>MensajeModeracion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evento in eventos %}
+            <tr>
+                <td>{{ evento.id }}</td>
+                <td>{{ evento.titulo }}</td>
+                <td>{{ evento.fechaInicio ? evento.fechaInicio|date('Y-m-d') : '' }}</td>
+                <td>{{ evento.fechaFin ? evento.fechaFin|date('Y-m-d') : '' }}</td>
+                <td>{{ evento.hora ? evento.hora|date('H:i:s') : '' }}</td>
+                <td>{{ evento.ubicacion }}</td>
+                <td>{{ evento.coordenadas }}</td>
+                <td>{{ evento.precio }}</td>
+                <td>{{ evento.descripcion }}</td>
+                <td>{{ evento.imagen }}</td>
+                <td>{{ evento.web }}</td>
+                <td>{{ evento.visible ? 'Yes' : 'No' }}</td>
+                <td>{{ evento.bloqueado ? 'Yes' : 'No' }}</td>
+                <td>{{ evento.mensajeModeracion }}</td>
+                <td>
+                    <a href="{{ path('evento_show', {'id': evento.id}) }}">show</a>
+                    <a href="{{ path('evento_edit', {'id': evento.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('evento_new') }}">Create new</a>
+{% endblock %}

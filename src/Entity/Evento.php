@@ -41,9 +41,6 @@ class Evento
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Assert\Date()(
-     *     message = "Introduzca una fecha válida."
-     * )
      */
     private $fechaFin;
 
@@ -52,9 +49,7 @@ class Evento
      * @Assert\NotBlank(
      *     message = "Campo requerido."
      * )
-     * @Assert\Time()(
-     *     message = "Introduzca una hora válida."
-     * )
+     * 
      */
     private $hora;
 

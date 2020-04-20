@@ -29,7 +29,7 @@ class EventoController extends AbstractController
 
     /**
      * @Route("/new", name="evento_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER") //CAMBIAR
      */
     public function new(Request $request, Security $security): Response
     {
@@ -42,6 +42,7 @@ class EventoController extends AbstractController
             $evento->setUsuario($usuario);
             $evento->setVisible(true);
             $evento->setBloqueado(false);
+            $evento->setFechaPublicacion(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($evento);
             $entityManager->flush();

@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        {% block title %}Síntesis
+        {% block title %}
+        Síntesis
         {% endblock %}
     </title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+    {% block css %}{% endblock %}
+    <script src="https://kit.fontawesome.com/89aa4d3e9c.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="container-fluid">
@@ -37,8 +40,16 @@
                 <li class="nav-item mx-1">
                     <a class="nav-link" href="{{path('evento_new')}}">PUBLICAR EVENTO</a>
                 </li>
+                
                 <li class="nav-item mx-1">
-                    <a class="nav-link" href="{{path('app_login')}}">INICIAR SESIÓN</a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class="nav-link"
+                        href="{{path('usuario_datos')}}">@{{app.user.alias}}</a>
+                    {% else %}
+                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
+                        SESIÓN</a>
+                    {% endif %}
+
                 </li>
 
 
@@ -68,13 +79,16 @@
                 </li>
 
                 <li class="nav-item mx-1">
-                    <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO</a>
+                    <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO <i class="fas fa-plus-circle"
+                        aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item mx-1">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('usuario')}}">{{app.user.alias}}</a>
+                    <a class="navLinkHeader nav-link text-white btnSesion"
+                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user" aria-hidden="true"></i></a>
                     {% else %}
-                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR SESIÓN</a>
+                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
+                        SESIÓN <i class="fas fa-user-edit" aria-hidden="true"></i></a>
                     {% endif %}
 
                 </li>
@@ -85,9 +99,17 @@
 
         </nav>
     </header>
+    {% block buscador %}{% endblock %}
 
     <!-- CONTENIDO -->
-    <main class="row justify-content-center"> {% block contenido %}{% endblock %}
+    <main class="row justify-content-center">
+        <div class="col-12 titulo">{% block tituloSeccion %}{% endblock %}</div>
+
+
+        <div class="col-11 col-lg-10 contenedorContenido no-gutters">
+            {% block contenido %}{% endblock %}
+        </div>
+
     </main>
 
     <!-- FOOTER -->

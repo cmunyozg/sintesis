@@ -76,9 +76,6 @@ class Usuario implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\Date()(
-     *     message = "Introduzca una fecha válida."
-     * )
      */
     private $descripcion;
 
@@ -275,13 +272,18 @@ class Usuario implements UserInterface
     {
         return $this->alias;
     }
-    
+
     // UserInterface
 
     public function getRoles()
     {
-        if ($this->rol === 0) return array('ROLE_USER');
-        else return array('ROLE_ADMIN');
+        if ($this->rol == false) return array(
+            'ROLE_USER', 'ROLE_' . strtoupper($this->alias)
+        );
+        else return array(
+            'ROLE_ADMIN',
+            'ROLE_' . strtoupper($this->getAlias())
+        );
     }
 
     public function getPassword()

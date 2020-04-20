@@ -47,3 +47,6 @@ security:
             # This value auto-selects the best possible hashing algorithm
             # (i.e. Sodium when available).
             algorithm: auto
+    
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER

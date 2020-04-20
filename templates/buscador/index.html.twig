@@ -1,12 +1,8 @@
 {% extends 'base.html.twig' %}
 
-
-
-{% block contenido %}
-
+{% block buscador %}
 <!-- BUSCADOR -->
-<div class="col-12 buscador">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center buscador">
         <h1 class="tituloBuscador">Busca qué hacer en Valencia</h1>
         <div class="col-8">
             <form class="row justify-content-center">
@@ -48,14 +44,15 @@
 
         </div>
     </div>
-</div>
+{% endblock %}
+
+{% block tituloSeccion %}EVENTOS{% endblock %}
+
+{% block contenido %}
+
+
 
 <!-- EVENTOS -->
-<div class="col-12 titulo">EVENTOS</div>
-
-
-<div class="col-11 col-lg-10 contenedorContenido no-gutters">
-
     <!-- MAPA -->
 
     <div class="col-auto" id="map">
@@ -101,7 +98,7 @@
     </div>
 
 
-</div>
+
 
 
 

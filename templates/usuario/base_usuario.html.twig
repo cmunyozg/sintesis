@@ -1,20 +1,18 @@
 {% extends 'base.html.twig' %}
-{% block title %}Hello Usuario{% endblock %}
-
+{% block title %}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ asset('css/estilos-usuario.css') }}">{% endblock %}
+{% block tituloSeccion %}MENÚ DE USUARIO{% endblock %}
 {% block contenido %}
-<div class="col-12 mt-1 titulo">MENÚ DE USUARIO</div>
-
-<!-- COLUMNA MENÚ -->
-<div class="col-11 col-lg-10 contenedorContenido no-gutters">
-
-
-    <nav class="col-2 bg-light">
-        <h5 class="px-3 mb-1 text-muted">
-            {{app.user.alias}}
+<div class="row">
+    <!-- COLUMNA MENÚ -->
+    <div class="col-2 bg-light menu">
+        <h5 class="titulo-menu text-muted">
+           <a href="{{path('usuario_datos')}}"> Usuario: {{app.user.alias}}</a>
         </h5>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#"> <i class="fas fa-user-edit fa-lg mr-1"></i> Datos de usuario</a>
+                <a class="nav-link" href="{{path('usuario_edit', {'id': app.user.id})}}"> <i
+                        class="fas fa-user-edit fa-lg mr-1"></i> Editar perfil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-user-circle fa-lg mr-1"></i> Perfil público</a>
@@ -27,40 +25,39 @@
                 <a class="nav-link" href="#"><i class="fas fa-calendar-check fa-lg mr-1"></i> Suscripciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{path('evento_new')}}"><i class="fas fa-plus-circle fa-lg mr-1" aria-hidden="true"></i>
+                <a class="nav-link" href="{{path('evento_new')}}"><i class="fas fa-plus-circle fa-lg mr-1"
+                        aria-hidden="true"></i>
                     Publicar evento</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{path('app_logout')}}"><i class="fas fa-plus-circle fa-lg mr-1" aria-hidden="true"></i>
+                <a class="nav-link" href="{{path('app_logout')}}"><i class="fas fa-times-circle fa-lg mr-1"
+                        aria-hidden="true"></i>
                     Cerrar Sesión</a>
             </li>
-
-
-
         </ul>
-
-        <h5 class="px-3 mt-4 mb-1 text-muted">
+        {% if app.user.rol == 1 %}
+        <h5 class="titulo-menu text-muted">
             Menú de administrador
         </h5>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-times fa-lg"></i> Eventos reportados</a>
+                <a class="nav-link" href="#"><i class="fas fa-calendar-times fa-lg mr-1"></i> Eventos reportados</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-alt fa-lg"></i> Eventos activos</a>
+                <a class="nav-link" href="#"><i class="fas fa-calendar-alt fa-lg mr-1"></i> Eventos activos</a>
             </li>
 
         </ul>
+        {% endif %}
+    </div>
 
-    </nav>
 
-    <div role="main" class="col-5 ">
-        
+    <div class="col-10 contenido-usuario">
+
         {% block contenidoUsuario %}{% endblock %}
 
 
     </div>
-
-
 </div>
+
 {% endblock %}

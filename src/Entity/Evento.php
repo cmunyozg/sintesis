@@ -149,6 +149,11 @@ class Evento
      */
     private $reportes;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $fechaPublicacion;
+
     public function __construct()
     {
         $this->suscripciones = new ArrayCollection();
@@ -398,6 +403,18 @@ class Evento
                 $reporte->setEvento(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFechaPublicacion(): ?\DateTimeInterface
+    {
+        return $this->fechaPublicacion;
+    }
+
+    public function setFechaPublicacion(\DateTimeInterface $fechaPublicacion): self
+    {
+        $this->fechaPublicacion = $fechaPublicacion;
 
         return $this;
     }

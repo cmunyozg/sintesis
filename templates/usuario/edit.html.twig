@@ -1,0 +1,15 @@
+{% extends "usuario/base_usuario.html.twig" %}
+
+{% block title %}Editar perfil | Síntesis{% endblock %}
+
+{% block contenidoUsuario %}
+
+
+<h1>Editar perfil</h1>
+
+{{ include('usuario/_form.html.twig', {'button_label': 'Actualizar datos'}) }}
+
+
+{{ include('usuario/_delete_form.html.twig') }}
+
+{% endblock %}

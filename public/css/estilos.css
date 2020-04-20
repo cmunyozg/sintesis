@@ -5,6 +5,11 @@ a:active {
     color: black;
 }
 
+p{
+    margin: 0;
+ 
+}
+
 .fijado {
     position: fixed;
     top: 0;
@@ -58,7 +63,7 @@ header {
 }
 
 .btnSesion {
-    background-color: #B42236;
+    background-color: #dc3545;
     border-radius: 10px;
     vertical-align: middle;
     margin-top: 3px;
@@ -79,7 +84,7 @@ header {
 }
 
 .btnBuscar {
-    background-color: #B42236;
+    background-color: #dc3545;
     border-radius: 100%;
     height: 50px;
     width: 50px;
@@ -99,11 +104,12 @@ header {
     margin-top: 15px;
     margin-bottom: 30px;
     border-radius: 5px;
+    padding: 18px;
 
 }
 
 #map {
-    margin-top: 15px;
+    
     margin-bottom: 15px;
 }
 

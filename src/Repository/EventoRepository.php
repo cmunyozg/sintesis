@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Evento;
+use App\Entity\Usuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,22 +20,20 @@ class EventoRepository extends ServiceEntityRepository
         parent::__construct($registry, Evento::class);
     }
 
-    // /**
-    //  * @return Evento[] Returns an array of Evento objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Evento[] Returns an array of Evento objects
+    */
+    public function findByUsuario(Usuario $usuario)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('e.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->orderBy('e.fechaInicio', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Evento

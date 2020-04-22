@@ -1,59 +1,49 @@
-{% extends 'base.html.twig' %}
+{% extends "usuario/base_usuario.html.twig" %}
 
-{% block title %}Evento index{% endblock %}
+{% block title %}Eventos publicados | Síntesis{% endblock %}
 
-{% block contenido %}
-    <h1>Evento index</h1>
+{% block contenidoUsuario %}
+<h1>Eventos publicados</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>FechaInicio</th>
-                <th>FechaFin</th>
-                <th>Hora</th>
-                <th>Ubicacion</th>
-                <th>Coordenadas</th>
-                <th>Precio</th>
-                <th>Descripcion</th>
-                <th>Imagen</th>
-                <th>Web</th>
-                <th>Visible</th>
-                <th>Bloqueado</th>
-                <th>MensajeModeracion</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Hora</th>
+            <th>Ubicación</th>
+            <th>Precio</th>
+            <th>Descripcion</th>
+          
+            <th>Web</th>
+            
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for evento in eventos %}
-            <tr>
-                <td>{{ evento.id }}</td>
-                <td>{{ evento.titulo }}</td>
-                <td>{{ evento.fechaInicio ? evento.fechaInicio|date('Y-m-d') : '' }}</td>
-                <td>{{ evento.fechaFin ? evento.fechaFin|date('Y-m-d') : '' }}</td>
-                <td>{{ evento.hora ? evento.hora|date('H:i:s') : '' }}</td>
-                <td>{{ evento.ubicacion }}</td>
-                <td>{{ evento.coordenadas }}</td>
-                <td>{{ evento.precio }}</td>
-                <td>{{ evento.descripcion }}</td>
-                <td>{{ evento.imagen }}</td>
-                <td>{{ evento.web }}</td>
-                <td>{{ evento.visible ? 'Yes' : 'No' }}</td>
-                <td>{{ evento.bloqueado ? 'Yes' : 'No' }}</td>
-                <td>{{ evento.mensajeModeracion }}</td>
-                <td>
-                    <a href="{{ path('evento_show', {'id': evento.id}) }}">show</a>
-                    <a href="{{ path('evento_edit', {'id': evento.id}) }}">edit</a>
-                </td>
-            </tr>
+        <tr>
+            <td>{{ evento.titulo }}</td>
+            <td>{{ evento.fechaInicio|date('d-m-Y') }}</td>
+            <td>{{ evento.fechaFin ? evento.fechaFin|date('d-m-Y') : '-' }}</td>
+            <td>{{ evento.hora|date('H:i') }}</td>
+            <td>{{ evento.ubicacion }}</td>
+            <td>{{ evento.precio }}</td>
+            <td>{{ evento.descripcion|slice(0,50) ~ '...' }}</td>
+            <td>{{ evento.web ? evento.web : '-' }}</td>
+            
+            <td>
+                <a href="{{ path('evento_show', {'id': evento.id}) }}"><button class="btn btn-primary">Ver</button></a>
+                <a href="{{ path('evento_edit', {'id': evento.id}) }}"><button class="btn btn-primary">Editar</button></a>
+            </td>
+        </tr>
         {% else %}
-            <tr>
-                <td colspan="15">no records found</td>
-            </tr>
+        <tr>
+            <td colspan="9">No has publicado ningún evento todavía</td>
+        </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    <a href="{{ path('evento_new') }}">Create new</a>
 {% endblock %}

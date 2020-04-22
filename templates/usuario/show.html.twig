@@ -1,16 +1,13 @@
 {% extends "usuario/base_usuario.html.twig" %}
 
-{% block title %}Editar perfil | Síntesis{% endblock %}
+{% block title %} {{usuario.alias}} | Síntesis{% endblock %}
 
 {% block contenidoUsuario %}
     <h1>Usuario</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ usuario.id }}</td>
-            </tr>
+            
             <tr>
                 <th>Alias</th>
                 <td>{{ usuario.alias }}</td>
@@ -24,11 +21,11 @@
                 <td>{{ usuario.email }}</td>
             </tr>
             <tr>
-                <th>Passwd</th>
-                <td>{{ usuario.passwd }}</td>
+                <th>Contraseña</th>
+                <td><button class="btn btn-primary">Cambiar contraseña</button></td>
             </tr>
             <tr>
-                <th>FechaNacimiento</th>
+                <th>Fecha de Nacimiento</th>
                 <td>{{ usuario.fechaNacimiento ? usuario.fechaNacimiento|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
@@ -36,20 +33,13 @@
                 <td>{{ usuario.descripcion }}</td>
             </tr>
             <tr>
-                <th>FechaRegistro</th>
+                <th>Fecha de Registro</th>
                 <td>{{ usuario.fechaRegistro ? usuario.fechaRegistro|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
-            <tr>
-                <th>Rol</th>
-                <td>{{ usuario.rol ? 'Yes' : 'No' }}</td>
-            </tr>
+            
           
         </tbody>
     </table>
 
    
-
-    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}">edit</a>
-
-    {{ include('usuario/_delete_form.html.twig') }}
 {% endblock %}

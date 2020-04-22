@@ -10,6 +10,7 @@ class BuscadorController extends AbstractController
 {
     /**
      * @Route("/", name="buscador_index")
+     * POR HACER
      */
     public function index()
     {

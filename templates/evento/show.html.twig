@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="{{ asset('css/estilos-evento.css') }}">{% endblock %}
 
 {% block contenido %}
-<div class="row ">
-    <div class="col-7">
+<div class="row mx-auto">
+    <div class="col-7 pl-0">
         <img src="https://www.teatrobellasartes.es/wp-content/uploads/2018/08/eventos-1200x540.jpg"
             class="img-fluid rounded" alt="" srcset="">
         <p class="p-1 text-danger mt-3 "><strong>DESCRIPCIÓN</strong></p>
@@ -38,9 +38,9 @@
         <p class="mt-3">Publicado por <span class="text-muted">{{evento.usuario.alias}}</span> el
             {{evento.fechaPublicacion|date('d/m/Y')}}</p>
         <div class="justify-content-center d-flex mt-5">
-            <a class="btn btn-danger mx-auto">SUSCRÍBETE</a>
+            <a class="mx-auto" href="#"><button class="btn btn-danger">SUSCRÍBETE</button></a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% if evento.usuario.id == app.user.id %} <a href="{{path('evento_edit', {'id': evento.id})}}" class="btn btn-primary mx-auto">EDITAR</a>{% endif %}
+            {% if evento.usuario.id == app.user.id %} <a href="{{path('evento_edit', {'id': evento.id})}}" class="mx-auto"><button class="btn btn-primary">EDITAR</button></a>{% endif %}
             {% endif %}
         </div>
 

@@ -24,28 +24,33 @@ class RegistrationFormType extends AbstractType
             ->add('alias', TextType::class)
             ->add('nombre', TextType::class)
             ->add('email', EmailType::class)
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('password', PasswordType::class, [
                 'mapped' => false,
+                'help' => 'Debe contener al menos 6 caracteres.',
+                'label' => 'Contraseña',
                 'constraints' => [
+
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Campo requerido.',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'La contraseña debe tener al menos {{ limit }} caracteres.',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+
                 ],
             ])
-            ->add('fechaNacimiento', DateType::class)
+            ->add('fechaNacimiento', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'Aceptar términos y condiciones',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Debes aceptar los términos.',
                     ]),
                 ],
             ])

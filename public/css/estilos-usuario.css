@@ -1,7 +1,4 @@
-.menu {
-    padding-right: 20px;
-    padding-bottom: 25px;
-}
+
 .titulo-menu {
     padding-left: 15px;
     padding-top: 25px;
@@ -11,4 +8,8 @@
 }
 .contenido-usuario{
     padding: 20px;
+}
+
+.columna-usuario{
+    border-right: 1px solid rgb(220, 220, 220)
 }

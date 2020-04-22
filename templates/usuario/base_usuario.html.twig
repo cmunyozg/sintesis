@@ -3,11 +3,11 @@
 {% block css %}<link rel="stylesheet" href="{{ asset('css/estilos-usuario.css') }}">{% endblock %}
 {% block tituloSeccion %}MENÚ DE USUARIO{% endblock %}
 {% block contenido %}
-<div class="row">
+<div class="row mx-auto">
     <!-- COLUMNA MENÚ -->
-    <div class="col-2 bg-light menu">
+    <div class="col-2 bg-light columna-usuario">
         <h5 class="titulo-menu text-muted">
-           <a href="{{path('usuario_datos')}}"> Usuario: {{app.user.alias}}</a>
+            Usuario: <a href="{{path('usuario_datos')}}">{{app.user.alias}}</a>
         </h5>
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -18,7 +18,7 @@
                 <a class="nav-link" href="#"><i class="fas fa-user-circle fa-lg mr-1"></i> Perfil público</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-minus fa-lg mr-1"></i> Eventos
+                <a class="nav-link" href="{{path('evento_index')}}"><i class="fas fa-calendar-minus fa-lg mr-1"></i> Eventos
                     publicados</a>
             </li>
             <li class="nav-item">

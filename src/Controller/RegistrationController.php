@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
             $alias = $form['alias']->getData();
             $nombre = $form['nombre']->getData();
             $email = $form['email']->getData();
-            $plainPassword = $form['plainPassword']->getData();
+            $plainPassword = $form['password']->getData();
             $fechaNacimiento = $form['fechaNacimiento']->getData();
             $fechaRegistro = new \DateTime();
 

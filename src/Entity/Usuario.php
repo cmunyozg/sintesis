@@ -278,11 +278,10 @@ class Usuario implements UserInterface
     public function getRoles()
     {
         if ($this->rol == false) return array(
-            'ROLE_USER', 'ROLE_' . strtoupper($this->alias)
+            'ROLE_USER'
         );
         else return array(
-            'ROLE_ADMIN',
-            'ROLE_' . strtoupper($this->getAlias())
+            'ROLE_ADMIN'
         );
     }
 

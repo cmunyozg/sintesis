@@ -38,16 +38,17 @@
                 </li>
 
                 <li class="nav-item mx-1">
-                    <a class="nav-link" href="{{path('evento_new')}}">PUBLICAR EVENTO</a>
+                    <a class="nav-link" href="{{path('evento_new')}}">PUBLICAR EVENTO <i class="fas fa-plus-circle"
+                        aria-hidden="true"></i></a>
                 </li>
                 
                 <li class="nav-item mx-1">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="nav-link"
-                        href="{{path('usuario_datos')}}">@{{app.user.alias}}</a>
+                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user" aria-hidden="true"></i></a>
                     {% else %}
-                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
-                        SESIÓN</a>
+                    <a class="nav-link " href="{{path('app_login')}}">INICIAR
+                        SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
                     {% endif %}
 
                 </li>
@@ -88,7 +89,7 @@
                         href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user" aria-hidden="true"></i></a>
                     {% else %}
                     <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
-                        SESIÓN <i class="fas fa-user-edit" aria-hidden="true"></i></a>
+                        SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
                     {% endif %}
 
                 </li>
@@ -121,7 +122,7 @@
             <img class="mx-2" src="{{ asset('img/instagram.png') }}" height="35px" alt="" srcset="">
             <img class="mx-2" src="{{ asset('img/twitter.png') }}" height="35px" alt="" srcset="">
             <p class="mt-2">
-                <a href="">Ver términos y condiciones</a>
+                <a href="#">Ver términos y condiciones</a>
             </p>
         </div>
     </footer>

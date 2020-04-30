@@ -1,0 +1,25 @@
+{# templates/emails/registration.html.twig #}
+<h3>Bienvenido a Síntesis</h3>
+
+<p>Hola {{ user.nombre }}, gracias por registrarte en nuestra web.
+
+    Estos son tus datos de usuario:</p>
+
+<table>
+    <tr>
+        <td>User:</td>
+        <td>{{user.alias}}</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>{{user.email}}</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<p>Puedes iniciar sesión haciendo click <a href="{{url('app_login')}}">aquí.</a></p>
+<hr>
+<div style="text-align: center;"><img src="{{ absolute_url(asset('img/logo-negro.png')) }}"></div>

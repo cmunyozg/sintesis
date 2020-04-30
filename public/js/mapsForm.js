@@ -68,7 +68,7 @@ function initMap() {
             map.fitBounds(place.geometry.viewport);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(14);
+            map.setZoom(17);
         }
         // Muestra el marcador con la posición
         marker.setPosition(place.geometry.location);

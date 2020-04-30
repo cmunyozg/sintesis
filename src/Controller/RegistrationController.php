@@ -17,7 +17,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer): Response
     {
         $user = new Usuario();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -31,7 +31,6 @@ class RegistrationController extends AbstractController
             $plainPassword = $form['password']->getData();
             $fechaNacimiento = $form['fechaNacimiento']->getData();
             $fechaRegistro = new \DateTime();
-            
 
             $user->setAlias($alias)
                 ->setNombre($nombre)
@@ -40,7 +39,7 @@ class RegistrationController extends AbstractController
                 ->setFechaRegistro($fechaRegistro)
                 ->setRol(0);
 
-            // encode the plain password
+            // encode password
             $user->setPasswd(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -52,7 +51,19 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            // Envío de email
+            $message = (new \Swift_Message())
+                ->setFrom(['sintesis095@gmail.com' => 'Síntesis'])
+                ->setTo($user->getEmail())
+                ->setSubject("Bienvenido a Síntesis")
+                ->setBody(
+                    $this->renderView(
+                        'emails/registration.html.twig',
+                        ['user' => $user]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

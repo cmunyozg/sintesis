@@ -31,6 +31,7 @@ class RegistrationController extends AbstractController
             $plainPassword = $form['password']->getData();
             $fechaNacimiento = $form['fechaNacimiento']->getData();
             $fechaRegistro = new \DateTime();
+            
 
             $user->setAlias($alias)
                 ->setNombre($nombre)

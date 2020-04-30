@@ -21,20 +21,16 @@
                 <td>{{ usuario.email }}</td>
             </tr>
             <tr>
-                <th>Contraseña</th>
-                <td><button class="btn btn-primary">Cambiar contraseña</button></td>
-            </tr>
-            <tr>
                 <th>Fecha de Nacimiento</th>
-                <td>{{ usuario.fechaNacimiento ? usuario.fechaNacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{usuario.fechaNacimiento|date('d/m/Y')}}</td>
             </tr>
             <tr>
                 <th>Descripcion</th>
-                <td>{{ usuario.descripcion }}</td>
+                <td>{{ usuario.descripcion ? usuario.descripcion : '-' }}</td>
             </tr>
             <tr>
                 <th>Fecha de Registro</th>
-                <td>{{ usuario.fechaRegistro ? usuario.fechaRegistro|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{usuario.fechaRegistro|date('d/m/Y - H:i:s')}}</td>
             </tr>
             
           

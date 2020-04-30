@@ -1,4 +1,61 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>
+<div class="row">
+    <div class="col-8">
+        {{ form_row(form.titulo) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.categoria) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        {{ form_row(form.fechaInicio) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.hora) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.precio) }}
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-4">
+        {{ form_row(form.fechaFin) }}
+    </div>
+
+    <div class="col-4">
+        {{ form_row(form.imagen) }}
+    </div>
+    <div class="col-4">
+        {{ form_row(form.web) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {{ form_row(form.descripcion) }}
+    </div>
+    <div class="col-12">
+        {{ form_row(form.ubicacion) }}
+    </div>
+    <div class="col-12">
+        <div id="map-form"></div>
+        <div id="infowindow-content">
+            <img src="" width="16" height="16" id="place-icon">
+            <span id="place-name"  class="title"></span><br>
+            <span id="place-address"></span>
+          </div>
+    </div>
+    
+</div>
+
+
+<button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>
 {{ form_end(form) }}
+{% block javascripts %}
+<script src="{{asset('js/mapsForm.js')}}"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD76HFXmHnRneZtfK3sY2ROwKM9i26LeFY&libraries=places&callback=initMap"
+    async defer>
+    </script>
+{% endblock %}

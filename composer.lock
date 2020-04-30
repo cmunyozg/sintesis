@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a4695b187523764dd4926b259b27db5",
+    "content-hash": "e178030f3428ec065a19fe41914b4d3a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1150,6 +1150,50 @@
             "time": "2020-03-21T11:34:59+00:00"
         },
         {
+            "name": "jdenticon/jdenticon",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dmester/jdenticon-php.git",
+                "reference": "03ac5eb042295f744b4a44c544601b9df47d454e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dmester/jdenticon-php/zipball/03ac5eb042295f744b4a44c544601b9df47d454e",
+                "reference": "03ac5eb042295f744b4a44c544601b9df47d454e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jdenticon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Mester Pirttijärvi"
+                }
+            ],
+            "description": "Render PNG and SVG identicons.",
+            "homepage": "https://jdenticon.com/",
+            "keywords": [
+                "avatar",
+                "identicon",
+                "jdenticon"
+            ],
+            "time": "2019-11-02T11:39:20+00:00"
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -1915,16 +1959,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.0.5",
+            "version": "v5.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "3575004a9b0d51ead83473ec90121045b3a0b56f"
+                "reference": "4e48dc44680d8efa357410c78093a04753196981"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/3575004a9b0d51ead83473ec90121045b3a0b56f",
-                "reference": "3575004a9b0d51ead83473ec90121045b3a0b56f",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/4e48dc44680d8efa357410c78093a04753196981",
+                "reference": "4e48dc44680d8efa357410c78093a04753196981",
                 "shasum": ""
             },
             "require": {
@@ -1984,7 +2028,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2020-02-24T15:05:31+00:00"
+            "time": "2020-03-30T11:42:42+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",

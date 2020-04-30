@@ -99,6 +99,11 @@ class Usuario implements UserInterface
      */
     private $eventos;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imagen;
+
     public function __construct()
     {
         $this->suscripciones = new ArrayCollection();
@@ -302,5 +307,17 @@ class Usuario implements UserInterface
     public function eraseCredentials()
     {
         return;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(?string $imagen): self
+    {
+        $this->imagen = $imagen;
+
+        return $this;
     }
 }

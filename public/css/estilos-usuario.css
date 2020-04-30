@@ -13,3 +13,10 @@
 .columna-usuario{
     border-right: 1px solid rgb(220, 220, 220)
 }
+
+#map-form{
+    height: 300px;
+}
+#infowindow-content {
+    display: none;
+  }

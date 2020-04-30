@@ -7,8 +7,15 @@
 {% block contenido %}
 <div class="row mx-auto">
     <div class="col-7 pl-0">
-        <img src="https://www.teatrobellasartes.es/wp-content/uploads/2018/08/eventos-1200x540.jpg"
-            class="img-fluid rounded" alt="" srcset="">
+        <div class="text-center">
+            {% if evento.imagen %}
+            <img src="{{asset('uploads/eventos/' ~ evento.imagen)}}" class="img-fluid rounded" alt="" srcset="">
+
+            {% else %}
+            <img src="https://www.teatrobellasartes.es/wp-content/uploads/2018/08/eventos-1200x540.jpg"
+                class="img-fluid rounded" alt="" srcset="">
+            {% endif %}
+        </div>
         <p class="p-1 text-danger mt-3 "><strong>DESCRIPCIÓN</strong></p>
         <p class="p-1 descripcion-evento">{{evento.descripcion}}</p>
 
@@ -30,8 +37,8 @@
         <p>PRECIO: {{ evento.precio == 0 ? 'Gratis' : evento.precio ~'€'}}</p>
 
         {% if evento.web %}
-        <p class="mt-3"><strong class="text-danger">WEB: </strong><a class="text-muted" href="{{evento.web}}"
-                target="_blank">{{evento.web}}</a></p>
+        <p class="mt-3"><strong class="text-danger">WEB: </strong></p>
+        <p><a class="text-muted" href="{{evento.web}}" target="_blank">{{evento.web}}</a></p>
         {% endif %}
 
 
@@ -40,7 +47,8 @@
         <div class="justify-content-center d-flex mt-5">
             <a class="mx-auto" href="#"><button class="btn btn-danger">SUSCRÍBETE</button></a>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% if evento.usuario.id == app.user.id %} <a href="{{path('evento_edit', {'id': evento.id})}}" class="mx-auto"><button class="btn btn-primary">EDITAR</button></a>{% endif %}
+            {% if evento.usuario.id == app.user.id %} <a href="{{path('evento_edit', {'id': evento.id})}}"
+                class="mx-auto"><button class="btn btn-primary">EDITAR</button></a>{% endif %}
             {% endif %}
         </div>
 

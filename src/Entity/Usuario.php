@@ -219,23 +219,24 @@ class Usuario implements UserInterface
         return $this->suscripciones;
     }
 
-    public function addSuscripcione(Suscripcion $suscripcione): self
+    public function addSuscripcion(Suscripcion $suscripcion): self
     {
-        if (!$this->suscripciones->contains($suscripcione)) {
-            $this->suscripciones[] = $suscripcione;
-            $suscripcione->setUsuario($this);
-        }
+        if (!$this->suscripciones->contains($suscripcion)) {
+            $this->suscripciones[] = $suscripcion;
+            $suscripcion->setUsuario($this);
 
+
+        }
         return $this;
     }
 
-    public function removeSuscripcione(Suscripcion $suscripcione): self
+    public function removeSuscripcion(Suscripcion $suscripcion): self
     {
-        if ($this->suscripciones->contains($suscripcione)) {
-            $this->suscripciones->removeElement($suscripcione);
+        if ($this->suscripciones->contains($suscripcion)) {
+            $this->suscripciones->removeElement($suscripcion);
             // set the owning side to null (unless already changed)
-            if ($suscripcione->getUsuario() === $this) {
-                $suscripcione->setUsuario(null);
+            if ($suscripcion->getUsuario() === $this) {
+                $suscripcion->setUsuario(null);
             }
         }
 

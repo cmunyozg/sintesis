@@ -28,7 +28,11 @@ class UsuarioType extends AbstractType
                 DateType::class,
                 [
                     'label' => 'Fecha de Nacimiento',
-                    'widget' => 'single_text',
+                    'label_attr' => ['class' => 'pt-0'],
+                    'widget' => 'choice',
+                    'view_timezone' => 'Europe/Madrid',
+                    'format' => 'd / MMMM / yyyy',
+                    'years' => $this->getYears()
                 ]
             )
             ->add('imagen', FileType::class, [
@@ -51,6 +55,19 @@ class UsuarioType extends AbstractType
                 'label' => 'Descripción',
                 'required' => false
             ]);
+    }
+
+    public function getYears(): array
+    {
+        $actualYear = (new \DateTime())->format('Y');
+        $max = $actualYear - 16;
+        $min = $actualYear - 90;
+        $arrayYears = [];
+
+        for ($i = $max; $i >= $min; $i--) {
+            array_push($arrayYears, $i);
+        }
+        return $arrayYears;
     }
 
     public function configureOptions(OptionsResolver $resolver)

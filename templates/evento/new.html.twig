@@ -3,8 +3,25 @@
 {% block title %}Nuevo Evento | Síntesis{% endblock %}
 
 {% block contenidoUsuario %}
-    <h1>Crear nuevo evento</h1>
+{% if mensaje is defined and mensaje == 1 %}
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+    <strong>Evento publicado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}"
+        class="alert-link">Click aquí para visualizarlo.</a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-    {{ include('evento/_form.html.twig') }}
+{% elseif mensaje is defined and mensaje == 2 %}
+<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+    <strong>Ha ocurrido algún error.</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+<h1>Crear nuevo evento</h1>
+
+{{ include('evento/_form.html.twig') }}
 
 {% endblock %}

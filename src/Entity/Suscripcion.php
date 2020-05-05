@@ -18,13 +18,13 @@ class Suscripcion
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", inversedBy="suscripciones")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", inversedBy="suscripciones", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $usuario;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Evento", inversedBy="suscripciones")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evento", inversedBy="suscripciones", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $evento;

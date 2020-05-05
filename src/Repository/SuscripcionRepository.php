@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Suscripcion;
+use App\Entity\Usuario;
+use App\Entity\Evento;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,6 +19,32 @@ class SuscripcionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Suscripcion::class);
+    }
+
+    /**
+     * @return Suscripcion[] 
+     */
+    public function findByUserAndEvent(Usuario $usuario, Evento $evento)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.evento = :evento')
+            ->andWhere('s.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->setParameter('evento', $evento)
+            ->getQuery()
+            ->getResult();
+    }
+
+       /**
+     * @return Suscripcion[] 
+     */
+    public function findByUser(Usuario $usuario)
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

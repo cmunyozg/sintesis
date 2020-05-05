@@ -29,7 +29,7 @@
             <td class="align-middle">{{ evento.fechaFin ? evento.fechaFin|date('d-m-Y') : '-' }}</td>
             <td class="align-middle">{{ evento.hora|date('H:i') }}</td>
             <td class="align-middle">{{ evento.ubicacion }}</td>
-            <td class="align-middle">{{ evento.precio ? evento.precio ~ '€' : '-' }}</td>
+            <td class="align-middle">{{ evento.precio ? evento.precio/100 ~ '€' : '-' }}</td>
             <td class="align-middle">{{ evento.descripcion|slice(0,80) ~ '...' }}</td>
             
             <td class="align-middle">

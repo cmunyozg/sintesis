@@ -3,10 +3,27 @@
 {% block title %}Editar evento | Síntesis{% endblock %}
 
 {% block contenidoUsuario %}
-    <h1>Editar Evento</h1>
+{% if mensaje is defined and mensaje == 1 %}
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+    <strong>Evento editado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}" class="alert-link">Click aquí para visualizarlo.</a>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
-    {{ include('evento/_form.html.twig', {'button_label': 'Actualizar datos'}) }}
+{% elseif mensaje is defined and mensaje == 2 %}
+<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+    <strong>Ha ocurrido algún error.</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+<div class="justify-content-between d-flex">
+<h1>Editar Evento</h1><span class="mr-4">{{ include('evento/_delete_form.html.twig') }}</span>
+</div>
+{{ include('evento/_form.html.twig', {'button_label': 'Actualizar datos'}) }}
 
 
-    {{ include('evento/_delete_form.html.twig') }}
+
 {% endblock %}

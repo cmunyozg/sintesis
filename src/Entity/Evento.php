@@ -55,13 +55,6 @@ class Evento
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 100,
-     *      minMessage = "Introduce al menos {{ limit }} caracteres.",
-     *      maxMessage = "Introduce menos de {{ limit }} caracteres.",
-     *      allowEmptyString = false
-     * )
      * @Assert\NotBlank(
      *     message = "Campo requerido."
      * )
@@ -153,6 +146,9 @@ class Evento
      * @ORM\Column(type="datetime")
      */
     private $fechaPublicacion;
+
+    
+   
 
     public function __construct()
     {
@@ -329,23 +325,23 @@ class Evento
         return $this->suscripciones;
     }
 
-    public function addSuscripcione(Suscripcion $suscripcione): self
+    public function addSuscripcion(Suscripcion $suscripcion): self
     {
-        if (!$this->suscripciones->contains($suscripcione)) {
-            $this->suscripciones[] = $suscripcione;
-            $suscripcione->setEvento($this);
+        if (!$this->suscripciones->contains($suscripcion)) {
+            $this->suscripciones[] = $suscripcion;
+            $suscripcion->setEvento($this);
         }
 
         return $this;
     }
 
-    public function removeSuscripcione(Suscripcion $suscripcione): self
+    public function removeSuscripcion(Suscripcion $suscripcion): self
     {
-        if ($this->suscripciones->contains($suscripcione)) {
-            $this->suscripciones->removeElement($suscripcione);
+        if ($this->suscripciones->contains($suscripcion)) {
+            $this->suscripciones->removeElement($suscripcion);
             // set the owning side to null (unless already changed)
-            if ($suscripcione->getEvento() === $this) {
-                $suscripcione->setEvento(null);
+            if ($suscripcion->getEvento() === $this) {
+                $suscripcion->setEvento(null);
             }
         }
 
@@ -418,4 +414,5 @@ class Evento
 
         return $this;
     }
+
 }

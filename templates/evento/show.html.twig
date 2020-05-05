@@ -34,21 +34,34 @@
         <p>LUGAR: {{ evento.ubicacion|upper}}</p>
 
         <p class="text-danger mt-3"><strong>¿CUÁNTO?</strong></p>
-        <p>PRECIO: {{ evento.precio == 0 ? 'Gratis' : evento.precio ~'€'}}</p>
+        <p>PRECIO: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
 
         {% if evento.web %}
-        <p class="mt-3"><strong class="text-danger">WEB: </strong></p>
+        <p class="mt-3"><strong class="text-danger">WEB </strong></p>
         <p><a class="text-muted" href="{{evento.web}}" target="_blank">{{evento.web}}</a></p>
         {% endif %}
 
 
         <p class="mt-3">Publicado por <span class="text-muted">{{evento.usuario.alias}}</span> el
             {{evento.fechaPublicacion|date('d/m/Y')}}</p>
-        <div class="justify-content-center d-flex mt-5">
-            <a class="mx-auto" href="#"><button class="btn btn-danger">SUSCRÍBETE</button></a>
+        <div class="text-center my-5">
+            
+
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {% if evento.usuario.id == app.user.id %} <a href="{{path('evento_edit', {'id': evento.id})}}"
-                class="mx-auto"><button class="btn btn-primary">EDITAR</button></a>{% endif %}
+                {% if evento.usuario.id == app.user.id %}
+                    <a href="{{path('evento_edit', {'id': evento.id})}}"><button
+                    class="btn btn-primary">EDITAR</button></a>
+                {% else %}
+                    {% if suscrito %}
+                        <a href="{{path('suscripcion_remove', {'eventoID' : evento.id, 'originPath': 'event'})}}"><button class="btn btn-danger">CANCELAR SUSCRIPCIÓN</button></a>
+                    {% else %}
+                    <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
+                        class="btn btn-danger">SUSCRÍBETE</button></a>
+                    {% endif %}
+                {% endif %}
+            {% else %}
+                <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
+                class="btn btn-danger">SUSCRÍBETE</button></a>
             {% endif %}
         </div>
 

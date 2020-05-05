@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Evento;
+use Doctrine\DBAL\Types\DecimalType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -10,7 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,12 +46,14 @@ class EventoType extends AbstractType
                 'help' => 'Introduce un nombre de establecimiento o una dirección.'
             ])
             ->add('coordenadas', HiddenType::class)
-            ->add('precio', NumberType::class, [
-                'scale' => 2,
-                'attr' => ['min' => 0]
+            ->add('precio', MoneyType::class, [
+                'divisor' => 100,
+                'required' => false,
+                'empty_data' => '0'
             ])
-            ->add('descripcion', TextType::class, [
-                'label' => 'Descripción'
+            ->add('descripcion', TextAreaType::class, [
+                'label' => 'Descripción',
+                'required' => false
             ])
             ->add('imagen', FileType::class, [
                 'label' => 'Imagen',

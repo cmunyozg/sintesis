@@ -29,11 +29,10 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('evento_index')}}"><i class="fas fa-calendar-minus fa-lg mr-1"></i>
-                    Eventos
-                    publicados</a>
+                    Publicaciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-check fa-lg mr-1"></i> Suscripciones</a>
+                <a class="nav-link" href="{{path('suscripciones')}}"><i class="fas fa-calendar-check fa-lg mr-1"></i> Suscripciones</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('evento_new')}}"><i class="fas fa-plus-circle fa-lg mr-1"
@@ -48,11 +47,11 @@
         </ul>
         {% if app.user.rol == 1 %}
         <h5 class="titulo-menu text-muted">
-            Menú de administrador
+            Administración
         </h5>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-times fa-lg mr-1"></i> Eventos reportados</a>
+                <a class="nav-link" href="#"><i class="fas fa-calendar-times fa-lg mr-1"></i> Reportes</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fas fa-calendar-alt fa-lg mr-1"></i> Eventos activos</a>

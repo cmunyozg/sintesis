@@ -4,8 +4,21 @@
 
 {% block contenidoUsuario %}
 
+<div class="justify-content-between d-flex flex-nowrap">
+    <h1>Editar Perfil</h1>
+  
+    <span class="mr-4 d-flex flex-nowrap">
+        <a href="{{path('change_passwd')}}" class="my-auto mr-2"><input class="btn btn-primary" type="button" value="Cambiar Contraseña"></a>       
+            <form class="my-auto" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}"
+                onsubmit="return confirm('¿Estás seguro de querer eliminar tu cuenta?');">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                <button class="btn btn-danger">Eliminar usuario</button>
+            </form>
+        
+    </span>
+</div>
 
-<h1>Editar perfil</h1>
 
 {{ form_start(form) }}
 <div class="row">
@@ -26,23 +39,48 @@
 </div>
 <div class="row">
     <div class="col-12">
-        {{form_row(form.imagen)}}
+        <div class="form-group">
+            {% if app.user.imagen %}
+            <div class="justify-content-between d-flex">
+                {{form_label(form.imagen)}}
+
+
+                <span data-toggle="modal" data-target="#modalImg" class="text-muted" style="cursor: pointer">
+                    Ver imagen actual
+                </span>
+
+            </div>
+            <!-- Modal -->
+            <div class="modal" id="modalImg" tabindex="-1" role="dialog" aria-labelledby="modalImgTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="modalImgTitle">Imagen actual</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="{{asset('uploads/usuarios/' ~ app.user.imagen)}}" width="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {{form_label(form.imagen)}}
+            {% endif %}
+            {{form_widget(form.imagen)}}
+        </div>
+    </div>
+    <div class="col-12">
         {{ form_row(form.descripcion) }}
     </div>
-
 </div>
 <div class="text-center">
-    <input class="btn btn-success" type="submit" value="Actualizar Datos">
-    <a href="{{path('change_passwd')}}"><input class="btn btn-primary" type="button" value="Cambiar Contraseña"></a>
+    <input class="btn btn-primary" type="submit" value="Actualizar Datos">
 </div>
 {{ form_end(form) }}
 
-<div class="text-center">
-    <form method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}"
-        onsubmit="return confirm('¿Estás seguro de querer eliminar tu cuenta?');">
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-        <button class="btn mt-2 btn-danger">Eliminar usuario</button>
-    </form>
-</div>
+
 {% endblock %}

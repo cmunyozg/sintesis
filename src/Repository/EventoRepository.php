@@ -26,7 +26,7 @@ class EventoRepository extends ServiceEntityRepository
     public function findByUsuario(Usuario $usuario)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.usuario = :usuario')
+            ->where('e.usuario = :usuario')
             ->setParameter('usuario', $usuario)
             ->orderBy('e.fechaInicio', 'ASC')
             ->getQuery()

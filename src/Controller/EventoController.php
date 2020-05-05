@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Evento;
 use App\Form\EventoType;
 use App\Repository\EventoRepository;
+use App\Repository\SuscripcionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,7 +34,7 @@ class EventoController extends AbstractController
 
     /**
      * @Route("/new", name="evento_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER") //CAMBIAR
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
@@ -60,8 +61,11 @@ class EventoController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // MOSTRAR ERROR EN LA SUBIDA
-
+                    return $this->render('evento/edit.html.twig', [
+                        'evento' => $evento,
+                        'form' => $form->createView(),
+                        'mensaje' => 2 //error
+                    ]);
                 }
                 $evento->setImagen($newFilename);
             }
@@ -72,25 +76,45 @@ class EventoController extends AbstractController
             $evento->setFechaPublicacion(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($evento);
-            $entityManager->flush();
 
-            //HACER: AÑADIR MENSAJE DE EVENTO PUBLICADO CON ÉXITO
-            return $this->redirectToRoute('evento_index');
+            try {
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                return $this->render('evento/edit.html.twig', [
+                    'evento' => $evento,
+                    'form' => $form->createView(),
+                    'mensaje' => 2 //error
+                ]);
+            }
+
+            return $this->render('evento/edit.html.twig', [
+                'evento' => $evento,
+                'form' => $form->createView(),
+                'mensaje' => 1 //éxito
+            ]);
         }
 
         return $this->render('evento/new.html.twig', [
             'evento' => $evento,
             'form' => $form->createView(),
+
         ]);
     }
 
     /**
      * @Route("/{id}", name="evento_show", methods={"GET"})
      */
-    public function show(Evento $evento): Response
+    public function show(Evento $evento, SuscripcionRepository $suscripRepository): Response
     {
+        $suscrito = false;
+        if ($user = $this->getUser()) {
+            if ($suscrip = $suscripRepository->findByUserAndEvent($user, $evento))
+                $user->getSuscripciones()->contains($suscrip[0]) ? $suscrito = true : $suscrito = false;
+        }
+
         return $this->render('evento/show.html.twig', [
             'evento' => $evento,
+            'suscrito' => $suscrito,
         ]);
     }
 
@@ -122,20 +146,36 @@ class EventoController extends AbstractController
                             $newFilename
                         );
                     } catch (FileException $e) {
-                        // MOSTRAR ERROR EN LA SUBIDA
-
+                        return $this->render('evento/edit.html.twig', [
+                            'evento' => $evento,
+                            'form' => $form->createView(),
+                            'mensaje' => 2 //error
+                        ]);
                     }
                     $evento->setImagen($newFilename);
                 }
 
-                $this->getDoctrine()->getManager()->flush();
+                try {
+                    $this->getDoctrine()->getManager()->flush();
+                } catch (\Exception $e) {
+                    return $this->render('evento/edit.html.twig', [
+                        'evento' => $evento,
+                        'form' => $form->createView(),
+                        'mensaje' => 2 //error
+                    ]);
+                }
 
-                return $this->redirectToRoute('evento_index');
+                return $this->render('evento/edit.html.twig', [
+                    'evento' => $evento,
+                    'form' => $form->createView(),
+                    'mensaje' => 1 //éxito
+                ]);
             }
 
             return $this->render('evento/edit.html.twig', [
                 'evento' => $evento,
                 'form' => $form->createView(),
+
             ]);
         } else throw new AccessDeniedException();
     }
@@ -153,4 +193,5 @@ class EventoController extends AbstractController
 
         return $this->redirectToRoute('evento_index');
     }
+ 
 }

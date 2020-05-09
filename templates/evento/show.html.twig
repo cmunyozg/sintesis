@@ -6,6 +6,21 @@
 
 {% block contenido %}
 <div class="row mx-auto">
+    {% if evento.bloqueado and app.user != evento.usuario and not is_granted('ROLE_ADMIN') %}
+    <div class="col-12">
+        <div class="alert alert-warning fade show text-center mt-3" role="alert">
+            <strong>Evento bloqueado</strong>
+        </div>
+    </div>
+
+    {% else %}
+    {% if evento.bloqueado and ( is_granted('ROLE_ADMIN') or app.user == evento.usuario) %}
+    <div class="col-12 p-0">
+        <div class="alert alert-warning fade show text-center" role="alert">
+            <strong>Evento bloqueado por el administrador</strong>
+        </div>
+    </div>
+    {% endif %}
     <div class="col-7 pl-0">
         <div class="text-center">
             {% if evento.imagen %}
@@ -19,8 +34,39 @@
         <p class="p-1 text-danger mt-3 "><strong>DESCRIPCIÓN</strong></p>
         <p class="p-1 descripcion-evento">{{evento.descripcion}}</p>
 
+        <p id="coordenadas">{{evento.coordenadas}}</p>      
+        <div id="map" class="mt-3"></div>
+        <div id="infowindow-content">
+            <img src="" width="16" height="16" id="place-icon">
+            <span id="place-name" class="title"></span><br>
+            <span id="place-address"></span>
+        </div>
+
+        <p data-toggle="modal" data-target="#modalReporte" class="text-muted mt-3 text-center" style="cursor: pointer">
+            Reportar Evento
+        </p>
+
+
+        <!-- Modal -->
+        <div class="modal" id="modalReporte" tabindex="-1" role="dialog" aria-labelledby="modalReporteTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="modalReporteTitle">Reportar Evento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ include('reporte/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="bg-light columna-evento col-5 pl-3">
+    <div class="bg-light columna-evento col-5 pl-3 pt-2">
 
         <h1 class="titulo-evento">{{evento.titulo}}</h1>
 
@@ -31,7 +77,7 @@
         <p>HORA: {{ evento.hora|date('H:i \\H')}}</p>
 
         <p class="text-danger mt-3"><strong>¿DÓNDE?</strong></p>
-        <p>LUGAR: {{ evento.ubicacion|upper}}</p>
+        <p>LUGAR: <span id="ubicacion">{{ evento.ubicacion|upper}}</span></p>
 
         <p class="text-danger mt-3"><strong>¿CUÁNTO?</strong></p>
         <p>PRECIO: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
@@ -45,28 +91,38 @@
         <p class="mt-3">Publicado por <span class="text-muted">{{evento.usuario.alias}}</span> el
             {{evento.fechaPublicacion|date('d/m/Y')}}</p>
         <div class="text-center my-5">
-            
+
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                {% if evento.usuario.id == app.user.id %}
-                    <a href="{{path('evento_edit', {'id': evento.id})}}"><button
-                    class="btn btn-primary">EDITAR</button></a>
-                {% else %}
-                    {% if suscrito %}
-                        <a href="{{path('suscripcion_remove', {'eventoID' : evento.id, 'originPath': 'event'})}}"><button class="btn btn-danger">CANCELAR SUSCRIPCIÓN</button></a>
-                    {% else %}
-                    <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
-                        class="btn btn-danger">SUSCRÍBETE</button></a>
-                    {% endif %}
-                {% endif %}
+            {% if evento.usuario.id == app.user.id %}
+            <a href="{{path('evento_edit', {'id': evento.id})}}"><button class="btn btn-primary">EDITAR</button></a>
             {% else %}
-                <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
-                class="btn btn-danger">SUSCRÍBETE</button></a>
+            {% if suscrito %}
+            <a href="{{path('suscripcion_remove', {'eventoID' : evento.id, 'originPath': 'event'})}}"><button
+                    class="btn btn-danger">CANCELAR SUSCRIPCIÓN</button></a>
+            {% else %}
+            <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
+                    class="btn btn-danger">SUSCRÍBETE</button></a>
+            {% endif %}
+            {% endif %}
+            {% else %}
+            <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
+                    class="btn btn-danger">SUSCRÍBETE</button></a>
             {% endif %}
         </div>
 
     </div>
+    {% endif %}
 </div>
 
 
+
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{asset('js/mapsEvent.js')}}"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD76HFXmHnRneZtfK3sY2ROwKM9i26LeFY&callback=initMap" async
+    defer>
+    </script>
 {% endblock %}

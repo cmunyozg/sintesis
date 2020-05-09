@@ -7,13 +7,14 @@
 {% block contenido %}
 <div class="row mx-auto">
     <!-- COLUMNA MENÚ -->
-    <div class="col-2 bg-light columna-usuario ">
+    <div class="col-2 bg-light columna-usuario pb-3">
         <h5 class="titulo-menu text-muted text-center pl-0">
             <a href="{{path('usuario_datos')}}">
                 {% if app.user.imagen %}
                 <img src="{{asset('uploads/usuarios/' ~ app.user.imagen)}}" height="80px" class="mb-2"><br>
                 {% else %}
-                <img src="https://avatars.dicebear.com/v2/human/{{app.user.alias}}.svg" height="80px" class="mb-2"><br>
+                <img src="https://avatars.dicebear.com/v2/identicon/{{app.user.alias}}.svg" height="80px"
+                    class="mb-2"><br>
                 {% endif %}
                 {{app.user.alias}}
             </a>
@@ -32,7 +33,8 @@
                     Publicaciones</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{path('suscripciones')}}"><i class="fas fa-calendar-check fa-lg mr-1"></i> Suscripciones</a>
+                <a class="nav-link" href="{{path('suscripciones')}}"><i class="fas fa-calendar-check fa-lg mr-1"></i>
+                    Suscripciones</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('evento_new')}}"><i class="fas fa-plus-circle fa-lg mr-1"
@@ -51,10 +53,16 @@
         </h5>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-times fa-lg mr-1"></i> Reportes</a>
+                <a class="nav-link" href="{{path('reporte_index')}}"><i class="fas fa-calendar-times fa-lg mr-1"></i>
+                    Reportes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-calendar-alt fa-lg mr-1"></i> Eventos activos</a>
+                <a class="nav-link" href="{{path('block_event_index')}}"><i
+                        class="fas fa-exclamation-circle fa-lg mr-1"></i> Bloqueos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('event_active_index')}}"><i class="fas fa-calendar-alt fa-lg mr-1"></i>
+                    Eventos activos</a>
             </li>
 
         </ul>

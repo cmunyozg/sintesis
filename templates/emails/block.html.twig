@@ -1,0 +1,18 @@
+{# templates/emails/block.html.twig #}
+<h3>Hay un problema con una de tus publicaciones.</h3>
+
+<p>Hola {{ user.nombre }}, hemos procedido a bloquear uno de tus eventos por los siguientes motivos:</p>
+<p>{{mensaje.moderacion}}</p>
+<p>Título del evento: <a href="{{url('evento_show', {'id': event.id})}}">{{event.titulo}}</a></p>
+
+
+<p>
+    Puedes publicar un nuevo evento que cumpla con nuestros términos y condiciones.
+    Si tienes alguna duda puedes hacernosla llegar respondiendo a este correo.</p>
+<p>
+    Puedes visualizar la publicación bloqueada haciendo click <a href="{{url('evento_show', {'id': event.id})}}">aquí</a>.
+    <br>
+    Recuerda que sólo será visible para ti si has iniciado sesión previamente.
+</p>
+<hr>
+<div style="text-align: center;"><img src="{{ absolute_url(asset('img/logo-fondo-blanco.png')) }}"></div>

@@ -24,7 +24,8 @@
     <tbody>
         {% for evento in eventos %}
         <tr>
-            <td class="align-middle">{{ evento.titulo }}</td>
+            <td class="align-middle">
+                {% if evento.bloqueado %}<span><i  style="color: orange;" class="fas fa-exclamation-circle fa-lg mr-1"></i></span>{% endif %}<a href="{{ path('evento_show', {'id': evento.id}) }}">{{ evento.titulo }}</a></td>
             <td class="align-middle">{{ evento.fechaInicio|date('d-m-Y') }}</td>
             <td class="align-middle">{{ evento.fechaFin ? evento.fechaFin|date('d-m-Y') : '-' }}</td>
             <td class="align-middle">{{ evento.hora|date('H:i') }}</td>

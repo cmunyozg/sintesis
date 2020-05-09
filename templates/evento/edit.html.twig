@@ -5,7 +5,7 @@
 {% block contenidoUsuario %}
 {% if mensaje is defined and mensaje == 1 %}
 <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-    <strong>Evento editado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}" class="alert-link">Click aquí para visualizarlo.</a>
+    <strong>Evento publicado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}" class="alert-link">Click aquí para visualizarlo.</a>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>

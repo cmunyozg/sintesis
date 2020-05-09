@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Evento;
 use App\Form\EventoType;
+use App\Entity\Reporte;
+use App\Form\ReporteType;
 use App\Repository\EventoRepository;
 use App\Repository\SuscripcionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * @Route("/evento")
+ * @Route("/event")
  */
 class EventoController extends AbstractController
 {
@@ -30,6 +32,66 @@ class EventoController extends AbstractController
         return $this->render('evento/index.html.twig', [
             'eventos' => $eventoRepository->findByUsuario($this->getUser()),
         ]);
+    }
+
+    /**
+     * @Route("/actives", name="event_active_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * Muestra al administrador los eventos activos (aún no ha cumplido la fecha de inicio o de fin del evento y no están bloqueados)
+     */
+    public function eventosActivos(EventoRepository $eventoRepository): Response
+    {
+        $events = $eventoRepository->findAll();
+        $activos = array();
+        $now = new \DateTime();
+
+        for ($i = 0; $i < count($events); $i++){
+            if ($fechaFin = $events[$i]->getFechaFin()){
+                if ($fechaFin > $now) array_push($activos, $events[$i]);
+            }else {
+                if ($events[$i]->getFechaInicio() > $now && !$events[$i]->getBloqueado()) array_push($activos, $events[$i]);
+            }
+        }
+
+        return $this->render('evento/active_index.html.twig', [
+            'eventos' => $activos,
+        ]);
+    }
+
+    /**
+     * @Route("/block", name="block_event", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function bloquearEvento(Request $request, EventoRepository $eventRepository, \Swift_Mailer $mailer): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $eventoID = $request->request->get('eventoID');
+        $mensajeModeracion = $request->request->get('mensaje');
+        $event = $eventRepository->find($eventoID);
+
+        if ($event->getBloqueado() == false) {
+            $event->setBloqueado(true);
+            $event->setMensajeModeracion($mensajeModeracion);
+            $em->persist($event);
+            $em->flush();
+
+            // // Envío de email
+            // $message = (new \Swift_Message())
+            //     ->setFrom(['sintesis095@gmail.com' => 'Síntesis'])
+            //     ->setTo($event->getUsuario()->getEmail())
+            //     ->setSubject("Hemos bloqueado una de tus publicaciones.")
+            //     ->setBody(
+            //         $this->renderView(
+            //             'emails/block.html.twig',
+            //             ['user' => $event->getUsuario(),
+            //             'event' => $event]
+            //         ),
+            //         'text/html'
+            //     );
+            // $mailer->send($message);
+        }
+
+        return $this->redirectToRoute('reporte_index');
     }
 
     /**
@@ -97,15 +159,26 @@ class EventoController extends AbstractController
         return $this->render('evento/new.html.twig', [
             'evento' => $evento,
             'form' => $form->createView(),
-
         ]);
     }
 
     /**
-     * @Route("/{id}", name="evento_show", methods={"GET"})
+     * @Route("/{id}", name="evento_show", methods={"GET", "POST"})
      */
-    public function show(Evento $evento, SuscripcionRepository $suscripRepository): Response
+    public function show(Evento $evento, SuscripcionRepository $suscripRepository, Request $request): Response
     {
+        // Formulario para reportes de eventos
+        $reporte = new Reporte();
+        $form = $this->createForm(ReporteType::class, $reporte);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $reporte->setEvento($evento);
+            $entityManager->persist($reporte);
+            $entityManager->flush();
+        }
+        
+        // Muestra/oculta el botón de suscripción
         $suscrito = false;
         if ($user = $this->getUser()) {
             if ($suscrip = $suscripRepository->findByUserAndEvent($user, $evento))
@@ -115,6 +188,7 @@ class EventoController extends AbstractController
         return $this->render('evento/show.html.twig', [
             'evento' => $evento,
             'suscrito' => $suscrito,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -180,6 +254,43 @@ class EventoController extends AbstractController
         } else throw new AccessDeniedException();
     }
 
+    
+
+    /**
+     * @Route("/unblock/{id}", name="unblock_event", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function desbloquearEvento($id, Request $request, EventoRepository $eventRepository): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $eventRepository->find($id);
+
+        if ($event->getBloqueado() == true) {
+            $event->setBloqueado(false);
+            $event->setMensajeModeracion('');
+            $em->persist($event);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('block_event_index');
+    }
+ 
+    /**
+     * @Route("/block/index", name="block_event_index", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function eventosBloqueados(EventoRepository $eventoRepository){
+
+        $eventos = $eventoRepository->findAll();
+        $eventosBloqueados = array();
+        for ($i = 0; $i<count($eventos); $i++){
+            if ($eventos[$i]->getBloqueado() == true) array_push($eventosBloqueados, $eventos[$i]);
+        }
+        return $this->render('evento/block_index.html.twig', [
+            'bloqueados' => $eventosBloqueados
+        ]);
+    }
+
     /**
      * @Route("/{id}", name="evento_delete", methods={"DELETE"})
      */
@@ -193,5 +304,6 @@ class EventoController extends AbstractController
 
         return $this->redirectToRoute('evento_index');
     }
- 
+
+  
 }

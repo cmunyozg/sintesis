@@ -14,31 +14,48 @@ class SuscripcionController extends AbstractController
     /**
      * @Route("/suscrip", name="suscripciones")
      * @IsGranted("ROLE_USER")
-     * // COMPROBAR
      */
-    public function index(SuscripcionRepository $suscripRepository)
+    public function proximasSuscripciones(SuscripcionRepository $suscripRepository)
     {
         $user = $this->getUser();
         $suscripciones = $suscripRepository->findByUser($user);
         $proximos = [];
-        $pasados = [];
         $now = new \DateTime();
 
-        for ($i = 0; $i < count($suscripciones); $i++){
+        for ($i = 0; $i < count($suscripciones); $i++) {
             $event = $suscripciones[$i]->getEvento();
             $fechaIncio = $event->getFechaInicio();
             if ($fechaIncio > $now) array_push($proximos, $event);
-            else array_push($pasados, $event);
-          
         }
-        
+
         return $this->render('suscripcion/index.html.twig', [
-            'proximos' => $proximos,
+            'proximos' => $proximos
+        ]);
+    }
+
+    /**
+     * @Route("/suscrip/old", name="suscripciones_antiguas")
+     * @IsGranted("ROLE_USER")
+     */
+    public function suscripcionesPasadas(SuscripcionRepository $suscripRepository)
+    {
+        $user = $this->getUser();
+        $suscripciones = $suscripRepository->findByUser($user);
+        $pasados = [];
+        $now = new \DateTime();
+
+        for ($i = 0; $i < count($suscripciones); $i++) {
+            $event = $suscripciones[$i]->getEvento();
+            $fechaIncio = $event->getFechaInicio();
+            if ($fechaIncio < $now) array_push($pasados, $event);
+        }
+
+        return $this->render('suscripcion/index_old.html.twig', [
             'pasados' => $pasados
         ]);
     }
 
-       /**
+    /**
      * @Route("/suscrip/add/{eventoID}", name="suscripcion_add")
      * @IsGranted("ROLE_USER")
      */
@@ -72,14 +89,15 @@ class SuscripcionController extends AbstractController
         $user = $this->getUser();
         $event = $em->find(Evento::class, $eventoID);
         $suscrip = $suscripRepository->findByUserAndEvent($user, $event);
-     
-            $user->removeSuscripcion($suscrip[0]);
-            $event->removeSuscripcion($suscrip[0]);
-            $em->remove($suscrip[0]);
-            $em->flush();
-            
+
+        $user->removeSuscripcion($suscrip[0]);
+        $event->removeSuscripcion($suscrip[0]);
+        $em->remove($suscrip[0]);
+        $em->flush();
+
         if ($originPath == 'event')
-        return $this->redirectToRoute('evento_show', ['id' => $eventoID]);
+            return $this->redirectToRoute('evento_show', ['id' => $eventoID]);
         else if ($originPath == 'suscrip') return $this->redirectToRoute('suscripciones');
+        else if ($originPath == 'suscrip_old') return $this->redirectToRoute('suscripciones_antiguas');
     }
 }

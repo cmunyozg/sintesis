@@ -1,0 +1,65 @@
+{% extends "usuario/base_usuario.html.twig" %}
+
+{% block title %}Eventos Bloqueados | Síntesis{% endblock %}
+
+{% block contenidoUsuario %}
+
+<h1>Eventos bloqueados</h1>
+
+<table class="table table-striped table-hover text-center">
+    <thead>
+        <tr>
+           
+            
+            <th>ID</th>
+            <th>Título</th>
+            <th>Mensaje de moderación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for evento in bloqueados %}
+        <tr><td>{{ evento.id }}</td>
+            <td><a href="{{ path('evento_show', {'id': evento.id}) }}" class="text-muted">{{ evento.titulo }}</a></td>
+            
+            <td>{{ evento.mensajeModeracion }}</td>
+            
+            <td>
+
+                <span data-toggle="modal" data-target="#modalDesbloqueo" style="cursor: pointer">
+                    <i class="fas fa-check-circle fa-lg"></i>
+                </span>&nbsp;
+                <!-- Modal Desbloquear Evento -->
+                <div class="modal text-center" id="modalDesbloqueo" tabindex="-1" role="dialog"
+                    aria-labelledby="modalDesbloqueoTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalDesbloqueoTitle">Desbloquear evento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <a href="{{ path('unblock_event', {'id': evento.id })}}"><button class="btn btn-success">Desbloquear evento</button></a>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                                Cancelar
+                            </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">No hay reportes</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

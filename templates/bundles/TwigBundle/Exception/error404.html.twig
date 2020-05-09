@@ -1,0 +1,12 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+<div class="text-center">
+    <h1>ERROR 404</h1>
+    <h1>Página no encontrada</h1>
+
+    <p class="h5">
+        No se pudo encontrar la página solicitada. Compruebe la dirección URL o <a href="{{ path('buscador_index') }}" class="text-muted">vuelva a la página de inicio</a>.
+    </p></div>
+{% endblock %}

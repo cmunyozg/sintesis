@@ -1,0 +1,12 @@
+{# templates/bundles/TwigBundle/Exception/error403.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block contenido %}
+<div class="text-center">
+    <h1>ERROR 403</h1>
+    <h1>No tiene permisos</h1>
+
+    <p class="h5">
+       Lo sentimos, no tiene permiso para acceder a esta sección. Por favor, <a href="{{ path('buscador_index') }}" class="text-muted">vuelva a la página de inicio</a>.
+    </p></div>
+{% endblock %}

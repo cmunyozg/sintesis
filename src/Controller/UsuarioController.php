@@ -54,7 +54,8 @@ class UsuarioController extends AbstractController
                   if ($brochureFile) {
                       // Transforma el nombre del archivo
                       $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                      $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                      $safeFilename = iconv('UTF-8', 'ASCII//TRANSLIT', $originalFilename);
+                      // $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
                       $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
                       try {
                           // Mueve la imagen a la ruta especificada en services.yaml/parameters

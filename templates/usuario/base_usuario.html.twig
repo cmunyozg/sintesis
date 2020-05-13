@@ -23,10 +23,10 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="{{path('usuario_edit', {'id': app.user.id})}}"><i
-                        class="fas fa-edit fa-lg mr-1 mt-2"></i>Editar perfil</a>
+                        class="fas fa-edit fa-lg mr-1 mt-2"></i>Editar datos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-user-circle fa-lg mr-1"></i> Perfil público</a>
+                <a class="nav-link" href="{{path('usuario_perfil', {'id': app.user.id})}}"><i class="fas fa-user-circle fa-lg mr-1"></i> Perfil público</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{path('evento_index')}}"><i class="fas fa-calendar-minus fa-lg mr-1"></i>

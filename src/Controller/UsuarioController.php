@@ -6,6 +6,7 @@ use App\Entity\Usuario;
 use App\Form\UsuarioType;
 use App\Form\Model\ChangePasswd;
 use App\Form\ChangePasswdType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,24 +19,52 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/usuario")
- * @IsGranted("ROLE_USER")
+ * 
  */
 class UsuarioController extends AbstractController
 {
     /**
      * @Route("/datos", name="usuario_datos")
-     * 
+     * @IsGranted("ROLE_USER")
      */
-    public function show(): Response
+    public function datos(): Response
     {
 
-        return $this->render('usuario/show.html.twig', [
+        return $this->render('usuario/data.html.twig', [
             'usuario' => $this->getUser(),
         ]);
     }
 
     /**
+     * @Route("/{id}", name="usuario_perfil")
+     */
+    public function perfil(Usuario $user): Response
+    {
+        if (count($eventos = $user->getEventos()) > 0);
+        else $eventos = null;
+
+        $actuales = array();
+        $pasados = array();
+        if ($eventos) {
+            $now = new DateTime();
+            foreach ($eventos as $evento) {
+                if (!$evento->getBloqueado() && $evento->getVisible()) {
+                    if ($evento->getFechaInicio() < $now) array_push($pasados, $evento);
+                    else array_push($actuales, $evento);
+                }
+            }
+        }
+
+        return $this->render('usuario/perfil.html.twig', [
+            'usuario' => $user,
+            'actuales' => $actuales,
+            'pasados' => $pasados
+        ]);
+    }
+
+    /**
      * @Route("/{id}/edit", name="usuario_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Usuario $usuario, $id): Response
     {
@@ -47,28 +76,28 @@ class UsuarioController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                  /** @var UploadedFile $brochureFile */
-                  $brochureFile = $form['imagen']->getData();
+                /** @var UploadedFile $brochureFile */
+                $brochureFile = $form['imagen']->getData();
 
-                  // Si hay imagen para subir
-                  if ($brochureFile) {
-                      // Transforma el nombre del archivo
-                      $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                      $safeFilename = iconv('UTF-8', 'ASCII//TRANSLIT', $originalFilename);
-                      // $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                      $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
-                      try {
-                          // Mueve la imagen a la ruta especificada en services.yaml/parameters
-                          $brochureFile->move(
-                              $this->getParameter('imagenes_usuarios'),
-                              $newFilename
-                          );
-                      } catch (FileException $e) {
-                          // MOSTRAR ERROR EN LA SUBIDA
-  
-                      }
-                      $usuario->setImagen($newFilename);
-                  }
+                // Si hay imagen para subir
+                if ($brochureFile) {
+                    // Transforma el nombre del archivo
+                    $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = iconv('UTF-8', 'ASCII//TRANSLIT', $originalFilename);
+                    // $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $brochureFile->guessExtension();
+                    try {
+                        // Mueve la imagen a la ruta especificada en services.yaml/parameters
+                        $brochureFile->move(
+                            $this->getParameter('imagenes_usuarios'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        // MOSTRAR ERROR EN LA SUBIDA
+
+                    }
+                    $usuario->setImagen($newFilename);
+                }
 
                 $this->getDoctrine()->getManager()->flush();
 
@@ -84,6 +113,7 @@ class UsuarioController extends AbstractController
 
     /**
      * @Route("/changePasswd", name="change_passwd", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function cambiarPasswd(Request $request, ChangePasswd $changepasswd, UserPasswordEncoderInterface $encoder)
     {
@@ -112,6 +142,7 @@ class UsuarioController extends AbstractController
 
     /**
      * @Route("/{id}", name="usuario_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Request $request, Usuario $usuario): Response
     {

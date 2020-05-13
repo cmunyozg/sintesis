@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class PrincipalController extends AbstractController
+class GeneralController extends AbstractController
 {
     /**
      * Obtiene las categorias de la BBDD para renderizarlas por Twig en el DropItem del menú

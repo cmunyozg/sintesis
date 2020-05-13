@@ -5,7 +5,7 @@
 {% block contenidoUsuario %}
 <h1>Suscripciones</h1>
 
-<table class="table table-striped table-hover text-center">
+<table class="table table-striped table-hover text-center tablaEnlace">
 
     <thead>
         <tr>
@@ -27,27 +27,26 @@
     </thead>
     <tbody>
         {% for evento in proximos %}
-        <tr>
-            <td class="align-middle">{{ evento.titulo }}</td>
-            <td class="align-middle">{{ evento.fechaInicio|date('d-m-Y') }}</td>
-            <td class="align-middle">{{ evento.hora|date('H:i') }}</td>
-            <td class="align-middle">{{ evento.ubicacion }}</td>
-            <td class="align-middle">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
+        <tr data-href={{path('evento_show', {'id': evento.id})}}>
+            <td class="align-middle pointer">{{ evento.titulo }}</td>
+            <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
+            <td class="align-middle pointer">{{ evento.hora|date('H:i') }}</td>
+            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
+            <td class="align-middle pointer">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
 
             <td class="align-middle">
-                <a href="{{ path('evento_show', {'id': evento.id}) }}"><i class="fas fa-eye fa-lg"></i></a>&nbsp;
 
 
-                <span data-toggle="modal" data-target="#modalBorrar" style="cursor: pointer">
-                    <i class="fas fa-trash-alt fa-lg"></i>
+                <span data-toggle="modal" data-target="#modalBorrar">
+                    <i class="fas fa-trash-alt fa-lg pointer"></i>
                 </span>
-                <!-- Modal Borrar Reporte-->
+                <!-- Modal Borrar Suscripción-->
                 <div class="modal text-left" id="modalBorrar" tabindex="-1" role="dialog"
                     aria-labelledby="modalBorrarTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalBorrarTitle">Eliminar Suscripcion</h5>
+                                <h5 class="modal-title" id="modalBorrarTitle">Eliminar Suscripción</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -77,4 +76,8 @@
             antiguas</button></a>
 </div>
 
+
+{% endblock %}
+{% block javascripts %}
+<script src="{{asset('js/hrefTR.js')}}"></script>
 {% endblock %}

@@ -53,10 +53,12 @@ class UsuarioType extends AbstractType
             ])
             ->add('descripcion', TextareaType::class, [
                 'label' => 'Descripción',
-                'required' => false
+                'required' => false,
+                'help' => 'Está información será visible en tu perfil público.'
             ]);
     }
 
+    // Años de nacimiento para usuarios de 16 - 90 años
     public function getYears(): array
     {
         $actualYear = (new \DateTime())->format('Y');

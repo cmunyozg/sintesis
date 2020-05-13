@@ -45,10 +45,10 @@ class EventoController extends AbstractController
         $activos = array();
         $now = new \DateTime();
 
-        for ($i = 0; $i < count($events); $i++){
-            if ($fechaFin = $events[$i]->getFechaFin()){
+        for ($i = 0; $i < count($events); $i++) {
+            if ($fechaFin = $events[$i]->getFechaFin()) {
                 if ($fechaFin > $now) array_push($activos, $events[$i]);
-            }else {
+            } else {
                 if ($events[$i]->getFechaInicio() > $now && !$events[$i]->getBloqueado()) array_push($activos, $events[$i]);
             }
         }
@@ -178,7 +178,7 @@ class EventoController extends AbstractController
             $entityManager->persist($reporte);
             $entityManager->flush();
         }
-        
+
         // Muestra/oculta el botón de suscripción
         $suscrito = false;
         if ($user = $this->getUser()) {
@@ -198,8 +198,8 @@ class EventoController extends AbstractController
      */
     public function edit(Request $request, Evento $evento): Response
     {
-        // Sólo permite editar si el usuario logeado es el creador del evento o si es admin, si no deniega acceso.
-        if ($evento->getUsuario() == $this->getUser() || $this->getUser()->getRol() == 1) {
+        // Sólo permite editar si el usuario logeado es el creador del evento, si no deniega acceso.
+        if ($evento->getUsuario() == $this->getUser()) {
             $form = $this->createForm(EventoType::class, $evento);
             $form->handleRequest($request);
 
@@ -256,13 +256,32 @@ class EventoController extends AbstractController
         } else throw new AccessDeniedException();
     }
 
-    
+    /**
+     * @Route("/visibility/{id}", name="event_visibility", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     * El evento desaparece de la lista de eventos del perfil del usuario, aunque sigue accesible si se tiene la ruta URL.
+     * Si ya estaba oculto, lo vuelve a mostrar
+     */
+    public function visibleOinvisible(Evento $event): Response
+    {
+        // Sólo permite editar si el usuario logeado es el creador del evento, si no deniega acceso.
+        if ($event->getUsuario() == $this->getUser()) {
+            $em = $this->getDoctrine()->getManager();
+            if ($event->getVisible() == true) $event->setVisible(false);
+            else $event->setVisible(true);
+            $em->persist($event);
+            $em->flush();
+
+            return $this->redirectToRoute('evento_index');
+        } else throw new AccessDeniedException();
+    }
+
 
     /**
      * @Route("/unblock/{id}", name="unblock_event", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function desbloquearEvento($id, Request $request, EventoRepository $eventRepository): Response
+    public function desbloquearEvento($id, EventoRepository $eventRepository): Response
     {
         $em = $this->getDoctrine()->getManager();
         $event = $eventRepository->find($id);
@@ -276,16 +295,17 @@ class EventoController extends AbstractController
 
         return $this->redirectToRoute('block_event_index');
     }
- 
+
     /**
      * @Route("/block/index", name="block_event_index", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function eventosBloqueados(EventoRepository $eventoRepository){
+    public function eventosBloqueados(EventoRepository $eventoRepository)
+    {
 
         $eventos = $eventoRepository->findAll();
         $eventosBloqueados = array();
-        for ($i = 0; $i<count($eventos); $i++){
+        for ($i = 0; $i < count($eventos); $i++) {
             if ($eventos[$i]->getBloqueado() == true) array_push($eventosBloqueados, $eventos[$i]);
         }
         return $this->render('evento/block_index.html.twig', [
@@ -306,6 +326,4 @@ class EventoController extends AbstractController
 
         return $this->redirectToRoute('evento_index');
     }
-
-  
 }

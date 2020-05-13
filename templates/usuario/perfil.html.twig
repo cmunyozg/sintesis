@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{usuario.alias}} | Síntesis{% endblock %}
+{% block css %}
+{% endblock %}
+{% block tituloSeccion %} {{usuario.alias|upper}}{% endblock %}
+{% block contenido %}
+<div class="row justify-content-center text-center">
+    <div class="col-auto mt-2">
+        {% if usuario.imagen %}
+        <img src="{{asset('uploads/usuarios/' ~ usuario.imagen)}}" height="200px" class="mb-2 rounded"><br>
+        {% else %}
+        <img src="https://avatars.dicebear.com/v2/identicon/{{usuario.alias}}.svg" height="200px" class="mb-2"><br>
+        {% endif %}
+    </div>
+    <div class="w-100"></div>
+    {% if usuario.descripcion %}
+
+    <div class="col-5 mt-3">
+        <p class="text-danger"><strong>INFORMACIÓN</strong></p>
+        <p>{{usuario.descripcion}}</p>
+
+    </div>
+    <div class="w-100"></div>
+    {% endif %}
+    <div class="col-auto mt-3">
+        <p>Usuario registrado el {{usuario.fechaRegistro|fecha}}</p>
+    </div>
+    
+</div>
+
+{% if actuales %}
+<hr>
+<h2 class="text-center mb-3 titulo"><strong>EVENTOS ACTUALES</strong></h2>
+
+<div class="row justify-content-around d-flex align-items-center no-gutters">
+    {% for evento in actuales %}
+    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-3 card cardEvento m-2">
+        {% if evento.imagen %}
+        <img src="{{asset('uploads/eventos/' ~ evento.imagen)}}" class="card-img-top img-fluid">
+        {% else %}
+        <img src="{{asset('img/defecto.jpg')}}" class="card-img-top img-fluid">
+        {% endif %}
+        <div class="card-body text-center">
+            <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
+            <p class="card-text">{{evento.descripcion|slice(0,150) ~ '...'}}</p>
+            <hr>
+            <p class="text-center mt-2">{{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}</p>
+            <p>Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+{% if pasados %}
+<hr>
+<h2 class="text-center mb-3 titulo"><strong>EVENTOS ANTIGUOS</strong></h2>
+<table class="table table-striped table-hover text-center tablaEnlace">
+
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Fecha</th>
+            <th>Ubicación</th>
+            <th>Descripcion</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for evento in pasados %}
+        <tr data-href={{path('evento_show', {'id': evento.id})}}>
+            <td class="align-middle pointer">{{ evento.titulo }}</td>
+            <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
+            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
+            <td class="align-middle pointer">{{ evento.descripcion|slice(0,80) ~ '...' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
+{% block javascripts %}
+<script src="{{asset('js/hrefTR.js')}}"></script>
+{% endblock %}

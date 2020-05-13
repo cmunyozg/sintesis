@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block buscador %}
+<!-- BUSCADOR -->
+<div class="row justify-content-center buscador">
+    <h1 class="tituloBuscador">Busca qué hacer en Valencia</h1>
+    <div class="col-8">
+        <form class="row justify-content-around" action="{{path('buscador')}}" method="POST">
+
+            <div class="col-auto form-group">
+                <label for="" class="ml-1">Palabras clave</label>
+                <input type="text" name="clave" class="form-control" placeholder="Opcional" {% if clave is defined %}
+                    value='{{clave}}' {% endif %}>
+
+            </div>
+            <div class="col-auto form-group">
+                <label for="" class="ml-1">Categoría</label>
+                <select name="categoria" class="custom-select" id="">
+                    <option value="Todas">Todas</option>
+                    {% for c in categorias %}
+                    <option {% if idCategoria is defined and idCategoria == c.id %} selected {% endif %}
+                        value="{{c.id}}">{{c.nombre}}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="col-auto form-group ">
+                <label for="" class="ml-1">Desde</label>
+                <input {% if inicio is defined %} value="{{inicio}}" {% endif %} name="desde" type="date"
+                    class="form-control">
+            </div>
+            <div class="col-auto form-group">
+                <label for="" class="ml-1">Hasta</label>
+
+                <input {% if fin is defined %} value="{{fin}}" {% endif %} name="hasta" type="date"
+                    class="form-control">
+            </div>
+            <div class="col-auto form-group align-self-center">
+                <label for=""></label>
+                <div class="custom-control custom-checkbox">
+                    <input name="gratuito" type="checkbox" class="custom-control-input" id="customCheck1"
+                        {% if gratis is defined and gratis %}checked{% endif %}>
+                    <label class="custom-control-label" for="customCheck1">Sólo eventos
+                        gratuitos</label>
+                </div>
+            </div>
+
+            <div class="col-auto align-self-center">
+                <button type="submit" class="btn btn-block btnBuscar"><img src="img/flecha-derecha.png" alt="" srcset=""
+                        height="20px"></button>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block tituloSeccion %} {% if titulo is defined %}{{titulo|upper}}{% else %}EVENTOS{% endif %} {% endblock %}
+
+{% block contenido %}
+
+
+
+<!-- EVENTOS -->
+<!-- MAPA -->
+
+<div class="col-auto" id="map">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d769.8147735792327!2d-0.3594073942171999!3d39.48606376276594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6048a769bd2a51%3A0x868cb4bea88b8f9f!2sBenimaclet%2C%20Valencia!5e0!3m2!1ses!2ses!4v1582818576062!5m2!1ses!2ses"
+        width="100%" height="500" frameborder="1" style="border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 3px; "
+        allowfullscreen=""></iframe>
+
+</div>
+
+
+{% if eventos is defined %}
+<!-- Cards -->
+<div class="row justify-content-around d-flex align-items-center no-gutters">
+    {% for evento in eventos %}
+    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-3 card cardEvento m-2">
+        {% if evento.imagen %}
+        <img src="{{asset('uploads/eventos/' ~ evento.imagen)}}" class="card-img-top img-fluid">
+        {% else %}
+        <img src="{{asset('img/defecto.jpg')}}" class="card-img-top img-fluid">
+        {% endif %}
+        <div class="card-body text-center">
+            <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
+            <p class="card-text">{{evento.descripcion|slice(0,150) ~ '...'}}</p>
+            <hr>
+            <p class="text-center mt-2">{{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}</p>
+            <p>Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+
+
+
+
+{% endblock %}

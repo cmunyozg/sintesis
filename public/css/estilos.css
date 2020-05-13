@@ -42,6 +42,8 @@ header {
     background-size: cover;
     background-position-y: center;
     height: 230px;
+    padding-top: 55px;
+    padding-bottom: 70px;
     margin-bottom: 0px;
     box-shadow: 0px 0px 10px grey;
     border-bottom: 5px solid #fcc40f;
@@ -117,16 +119,19 @@ header {
     margin-bottom: 15px;
 }
 
-.cardEvento {
-    margin: 10px;
-    margin-bottom: 30px;
-    width: 350px;
-    height: auto;
-
+button {
+    padding: 0;
+    border: none;
+    background: none;
 }
 
+
 .cardEvento:hover {
-    box-shadow: 0px 0px 25px rgb(184, 183, 183);
+    box-shadow: 0px 0px 10px rgb(184, 183, 183);
+    cursor: pointer;
+}
+
+.pointer{
     cursor: pointer;
 }
 

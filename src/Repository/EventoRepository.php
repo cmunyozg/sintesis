@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Categoria;
 use App\Entity\Evento;
 use App\Entity\Usuario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,8 +22,8 @@ class EventoRepository extends ServiceEntityRepository
     }
 
     /**
-    * @return Evento[] Returns an array of Evento objects
-    */
+     * @return Evento[] Returns an array of Evento objects
+     */
     public function findByUsuario(Usuario $usuario)
     {
         return $this->createQueryBuilder('e')
@@ -30,20 +31,30 @@ class EventoRepository extends ServiceEntityRepository
             ->setParameter('usuario', $usuario)
             ->orderBy('e.fechaInicio', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    
 
-    /*
-    public function findOneBySomeField($value): ?Evento
+    /**
+     * @return Evento[] Returns an array of Evento objects
+     */
+    public function findByCategoria($categoriaID)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('e.categoria = :categoria')
+            ->setParameter('categoria', $categoriaID)
+            ->orderBy('e.fechaInicio', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    /**
+     * @return Evento[] Returns an array of Evento objects
+     */
+    public function findEvents($clave, $categoriaID, $inicio, $fin, $gratis)
+    {
+        $query = $this->createQueryBuilder('e');
+        if (!is_null($categoriaID)) $query->where('e.categoria = :categoria')
+            ->setParameter('categoria', $categoriaID)->getQuery()->getResult();
+        return $query;
+    }
 }

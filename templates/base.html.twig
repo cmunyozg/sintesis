@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 
 <head>
     <meta charset="UTF-8">
@@ -17,12 +17,12 @@
     <script src="https://kit.fontawesome.com/89aa4d3e9c.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="container-fluid">
+<body class="container-fluid d-flex flex-column h-100">
 
     <!-- HEADER FIXED -->
     <div class="headerFixed row justify-content-around oculto">
         <!-- LOGO -->
-        <div class="d-flex col-auto align-items-center"><a href="{{path('buscador_index')}}"><img
+        <div class="d-flex col-auto align-items-center"><a href="{{path('principal')}}"><img
                     src="{{ asset('img/logo-negro.png') }}" height="70px" alt=""></a>
         </div>
 
@@ -36,7 +36,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         CATEGORÍAS
                     </a>
-                    {{ render(controller('App\\Controller\\PrincipalController::categoriasMenu')) }}
+                    {{ render(controller('App\\Controller\\GeneralController::categoriasMenu')) }}
                 </li>
 
                 <li class="nav-item mx-1">
@@ -66,7 +66,7 @@
     <header class="row justify-content-around">
         <!-- LOGO -->
 
-        <div class="d-flex col-auto align-items-center"><a href="{{path('buscador_index')}}"><img
+        <div class="d-flex col-auto align-items-center"><a href="{{path('principal')}}"><img
                     src="{{ asset('img/logo.png') }}" alt="" srcset=""></a></div>
         <!-- NAV -->
         <nav class="navHeader navbar navbar-expand align-self-center">
@@ -78,7 +78,7 @@
                         role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         CATEGORÍAS
                     </a>
-                    {{ render(controller('App\\Controller\\PrincipalController::categoriasMenu')) }}
+                    {{ render(controller('App\\Controller\\GeneralController::categoriasMenu')) }}
                 </li>
 
                 <li class="nav-item mx-1">
@@ -116,7 +116,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="row">
+    <footer class="row mt-auto">
         <div class="col-12">
             <h4 class="mt-3"><img src="{{ asset('img/logo-negro.png') }}" height="40px" alt="" srcset=""> © 2020
             </h4>

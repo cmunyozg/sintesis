@@ -36,9 +36,9 @@ class EventoType extends AbstractType
                 'required' => false
             ])
             ->add('hora', TimeType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
                 'label_attr' => ['class' => 'pt-0'],
-                'minutes' => [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]
+                'minutes' => [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55],
 
             ])
             ->add('ubicacion', TextType::class, [
@@ -53,7 +53,8 @@ class EventoType extends AbstractType
             ])
             ->add('descripcion', TextAreaType::class, [
                 'label' => 'Descripción',
-                'required' => false
+                'required' => false,
+                'attr' => ['style' => 'min-height: 200px']
             ])
             ->add('imagen', FileType::class, [
                 'label' => 'Imagen',

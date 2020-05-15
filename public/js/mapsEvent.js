@@ -1,5 +1,5 @@
 function initMap() { 
-    var infowindowContent = document.getElementById('infowindow-content');
+    var infowindowContent = document.getElementById('infowindow');
     var coordenadas = document.getElementById('coordenadas').innerHTML;
 
     var map;

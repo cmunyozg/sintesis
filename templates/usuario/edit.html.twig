@@ -25,13 +25,13 @@
     <span class="mr-4 d-flex flex-nowrap">
 
         <span data-toggle="modal" data-target="#modalPasswd" class="my-auto mr-2" style="cursor: pointer">
-            <input class="btn btn-primary" type="button"
-                value="Cambiar Contraseña">
+            <input class="btn btn-primary" type="button" value="Cambiar Contraseña">
         </span>
 
 
-        <!-- Modal -->
-        <div class="modal" id="modalPasswd" tabindex="-1" role="dialog" aria-labelledby="modalPasswdTitle" aria-hidden="true">
+        <!-- Modal Change Passwd-->
+        <div class="modal" id="modalPasswd" tabindex="-1" role="dialog" aria-labelledby="modalPasswdTitle"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -42,24 +42,52 @@
                     </div>
                     <div class="modal-body justify-content-center d-flex text-center">
                         <div class="col-8">
-                        {{form_start(formPasswd)}}
-                        {{form_row(formPasswd.old)}}
-                        {{form_row(formPasswd.new)}}
-                        <div class="text-center">
-                        {{form_widget(formPasswd.submit)}}</div>
-                        {{form_end(formPasswd)}}</div>
+                            {{form_start(formPasswd)}}
+                            {{form_row(formPasswd.old)}}
+                            {{form_row(formPasswd.new)}}
+                            <div class="text-center">
+                                {{form_widget(formPasswd.submit)}}</div>
+                            {{form_end(formPasswd)}}</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <span data-toggle="modal" data-target="#modalDelete" class="my-auto" style="cursor: pointer">
+            <input class="btn btn-danger" type="button" value="Eliminar Usuario">
+        </span>
 
-        <form class="my-auto" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}"
-            onsubmit="return confirm('¿Estás seguro de querer eliminar tu cuenta?');">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-            <button class="btn btn-danger">Eliminar usuario</button>
-        </form>
+
+        <!-- Modal Delete User-->
+        <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="modalDeleteTitle">Eliminar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>¿Está seguro de querer eliminar su usuario?</p>
+                        <div class="justify-content-center d-flex mt-2">
+                        <form class="mr-2" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                            <button class="btn btn-danger">Eliminar</button>
+                        </form>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                            Cancelar
+                        </button></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+
 
     </span>
 </div>

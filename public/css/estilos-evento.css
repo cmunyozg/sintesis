@@ -15,9 +15,7 @@
 #map{
     height: 300px;
 }
-#infowindow-content {
-    display: none;
-  }
+
 
 #coordenadas {
     display: none;

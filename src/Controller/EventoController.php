@@ -188,6 +188,7 @@ class EventoController extends AbstractController
 
         return $this->render('evento/show.html.twig', [
             'evento' => $evento,
+            'descripcion' => nl2br($evento->getDescripcion()),
             'suscrito' => $suscrito,
             'form' => $form->createView(),
         ]);

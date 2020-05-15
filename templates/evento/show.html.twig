@@ -32,11 +32,11 @@
             {% endif %}
         </div>
         <p class="p-1 text-danger mt-3 "><strong>DESCRIPCIÓN</strong></p>
-        <p class="p-1 descripcion-evento">{{evento.descripcion}}</p>
+        <p class="p-1 descripcion-evento">{{descripcion|raw}}</p>
 
         <p id="coordenadas">{{evento.coordenadas}}</p>      
         <div id="map" class="mt-3"></div>
-        <div id="infowindow-content">
+        <div id="infowindow">
             <img src="" width="16" height="16" id="place-icon">
             <span id="place-name" class="title"></span><br>
             <span id="place-address"></span>

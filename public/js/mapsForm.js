@@ -1,7 +1,7 @@
 function initMap() {
     var coordenadasInputHidden = document.getElementById('evento_coordenadas');
     var coordenadas = coordenadasInputHidden.value;
-    var infowindowContent = document.getElementById('infowindow-content');
+    var infowindowContent = document.getElementById('infowindow');
     var map;
     var marker;
 
@@ -74,7 +74,7 @@ function initMap() {
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
 
-        // Establece las coordenadas de la ubicación en input hidden en formato JSON
+        // Establece las coordenadas de la ubicación en el input hidden en formato JSON
         var coordenadas = marker.getPosition().toString().slice(1,-1);
         coordenadasInputHidden.value = coordenadas;
 
@@ -94,6 +94,7 @@ function initMap() {
         infowindowContent.children['place-address'].textContent = address;
         infowindowContent.style = 'display: inline'
         infowindow.open(map, marker);
+
 
 
     });

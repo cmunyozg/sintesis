@@ -28,8 +28,7 @@
             <div class="col-auto form-group ">
                 <label for="" class="ml-1">Desde</label>
                 <input {% if inicio is defined %} value="{{inicio}}" {% else %} value="{{ "now"|date("Y-m-d") }}"
-                     {% endif %} name="desde" type="date"
-                    class="form-control">
+                    {% endif %} name="desde" type="date" class="form-control">
             </div>
             <div class="col-auto form-group">
                 <label for="" class="ml-1">Hasta</label>
@@ -67,17 +66,15 @@
 
 <!-- EVENTOS -->
 <!-- MAPA -->
+<div id="map"></div>
 
-<div class="col-auto" id="map">
-    <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d769.8147735792327!2d-0.3594073942171999!3d39.48606376276594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6048a769bd2a51%3A0x868cb4bea88b8f9f!2sBenimaclet%2C%20Valencia!5e0!3m2!1ses!2ses!4v1582818576062!5m2!1ses!2ses"
-        width="100%" height="500" frameborder="1" style="border: 1px solid rgba(0, 0, 0, 0.125); border-radius: 3px; "
-        allowfullscreen=""></iframe>
-
-</div>
+    <a href="" id="infowindow" class="text-center">
+        {# <img src="" width="16" height="16" id="place-icon"> #}
+        <p  id="titulo"></p>
+        <p id="info"></p>
+    </a>
 
 
-{% if eventos is defined %}
 <!-- Cards -->
 <div class="row justify-content-around d-flex align-items-center no-gutters">
     {% for evento in eventos %}
@@ -94,15 +91,18 @@
             <p class="text-center mt-2">{{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}</p>
             <p>Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
         </div>
+        <p class="d-none datos">
+            {{evento.id ~ ',' ~ evento.titulo ~ ',' ~ evento.coordenadas~ ',' ~ evento.fechaInicio|date('d/m/Y') ~ ' - ' ~ evento.hora|date('H:i') }}
+        </p>
     </a>
     {% endfor %}
 </div>
-{% endif %}
-
-
-
-
-
-
-
+{% endblock %}
+{% block javascripts %}
+<script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+<script src="{{asset('js/mapsPrincipal.js')}}"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD76HFXmHnRneZtfK3sY2ROwKM9i26LeFY&callback=initMap" async
+    defer>
+    </script>
 {% endblock %}

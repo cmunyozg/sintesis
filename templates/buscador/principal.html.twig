@@ -16,7 +16,7 @@
             <div class="col-auto form-group">
                 <label for="" class="ml-1">Categoría</label>
                 <select name="categoria" class="custom-select" id="">
-                    <option value="Todas">Todas</option>
+                    <option value="0">Todas</option>
                     {% for c in categorias %}
                     <option {% if idCategoria is defined and idCategoria == c.id %} selected {% endif %}
                         value="{{c.id}}">{{c.nombre}}</option>
@@ -27,7 +27,8 @@
 
             <div class="col-auto form-group ">
                 <label for="" class="ml-1">Desde</label>
-                <input {% if inicio is defined %} value="{{inicio}}" {% endif %} name="desde" type="date"
+                <input {% if inicio is defined %} value="{{inicio}}" {% else %} value="{{ "now"|date("Y-m-d") }}"
+                     {% endif %} name="desde" type="date"
                     class="form-control">
             </div>
             <div class="col-auto form-group">

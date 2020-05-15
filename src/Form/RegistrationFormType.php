@@ -21,7 +21,9 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('alias', TextType::class)
+            ->add('alias', TextType::class, [
+                'label' => 'Nombre de Usuario'
+            ])
             ->add('nombre', TextType::class)
             ->add('email', EmailType::class)
             ->add('password', PasswordType::class, [
@@ -42,9 +44,16 @@ class RegistrationFormType extends AbstractType
 
                 ],
             ])
-            ->add('fechaNacimiento', DateType::class, [
-                'widget' => 'single_text',
-            ])
+            ->add('fechaNacimiento',
+                DateType::class,
+                [
+                    'label' => 'Fecha de Nacimiento',
+                    'widget' => 'choice',
+                    'view_timezone' => 'Europe/Madrid',
+                    'format' => 'd / MMMM / yyyy',
+                    'years' => $this->getYears()
+                ]
+            )
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'label' => 'Aceptar términos y condiciones',
@@ -54,8 +63,25 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('registro', SubmitType::class);
+            ->add('registrarse', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary btn-lg mt-2']
+            ]);
     }
+
+    // Años de nacimiento para usuarios de 16 - 90 años
+    public function getYears(): array
+    {
+        $actualYear = (new \DateTime())->format('Y');
+        $max = $actualYear - 16;
+        $min = $actualYear - 90;
+        $arrayYears = [];
+
+        for ($i = $max; $i >= $min; $i--) {
+            array_push($arrayYears, $i);
+        }
+        return $arrayYears;
+    }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -35,6 +35,8 @@ class UsuarioController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/{id}", name="usuario_perfil")
      */
@@ -62,17 +64,25 @@ class UsuarioController extends AbstractController
         ]);
     }
 
+
+
     /**
      * @Route("/{id}/edit", name="usuario_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function edit(Request $request, Usuario $usuario, $id): Response
+    public function edit(Request $request, Usuario $usuario, $id, ChangePasswd $changepasswd, UserPasswordEncoderInterface $encoder): Response
     {
         // Sólo permite editar si la id conincide con la del usuario logeado, si no deniega acceso.
         if ($id == $this->getUser()->getId()) {
 
+            $mensaje = null;
+            $em = $this->getDoctrine()->getManager();
             $form = $this->createForm(UsuarioType::class, $usuario);
             $form->handleRequest($request);
+
+            $changepasswd = new ChangePasswd();
+            $formPasswd = $this->createForm(ChangePasswdType::class, $changepasswd);
+            $formPasswd->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
 
@@ -93,51 +103,50 @@ class UsuarioController extends AbstractController
                             $newFilename
                         );
                     } catch (FileException $e) {
-                        // MOSTRAR ERROR EN LA SUBIDA
+                        $mensaje = 2; // error
 
                     }
                     $usuario->setImagen($newFilename);
                 }
 
-                $this->getDoctrine()->getManager()->flush();
+                try {
+                    $this->getDoctrine()->getManager()->flush();
+                    $mensaje = 1; //exito
+                } catch (\Exception $e) {
+                    $mensaje = 2; // error
 
-                return $this->redirectToRoute('usuario_edit', ['id' => $usuario->getId()]);
+                };
+            }
+
+
+
+            if ($formPasswd->isSubmitted() && $formPasswd->isValid()) {
+
+                $usuario = $this->getUser();
+                $usuario->setPasswd(
+                    $encoder->encodePassword(
+                        $usuario,
+                        $changepasswd->getNew()
+                    )
+                );
+                try {
+                    $em->persist($usuario);
+                    $em->flush();
+                    $mensaje = 1; //exito
+                } catch (\Exception $e) {
+                    $mensaje = 2; // error
+
+                };
             }
 
             return $this->render('usuario/edit.html.twig', [
                 'usuario' => $usuario,
                 'form' => $form->createView(),
+                'formPasswd' => $formPasswd->createView(),
+                'mensaje' => $mensaje
             ]);
         } else throw new AccessDeniedException();
     }
-
-    /**
-     * @Route("/changePasswd", name="change_passwd", methods={"GET", "POST"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function cambiarPasswd(Request $request, ChangePasswd $changepasswd, UserPasswordEncoderInterface $encoder)
-    {
-        $changepasswd = new ChangePasswd();
-        $form = $this->createForm(ChangePasswdType::class, $changepasswd);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $usuario = $this->getUser();
-            $usuario->setPasswd(
-                $encoder->encodePassword(
-                    $usuario,
-                    $changepasswd->getNew()
-                )
-            );
-            $em->persist($usuario);
-            $em->flush();
-        }
-        return $this->render('usuario/change_passwd.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
 
 
     /**

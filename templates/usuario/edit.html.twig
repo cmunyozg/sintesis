@@ -3,19 +3,64 @@
 {% block title %}Editar perfil | Síntesis{% endblock %}
 
 {% block contenidoUsuario %}
+{% if mensaje is defined and mensaje == 1 %}
+<div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+    <strong>Datos actualizados correctamente. </strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
+{% elseif mensaje is defined and mensaje == 2 %}
+<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+    <strong>Ha ocurrido algún error.</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
 <div class="justify-content-between d-flex flex-nowrap">
     <h1>Editar Perfil</h1>
-  
+
     <span class="mr-4 d-flex flex-nowrap">
-        <a href="{{path('change_passwd')}}" class="my-auto mr-2"><input class="btn btn-primary" type="button" value="Cambiar Contraseña"></a>       
-            <form class="my-auto" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}"
-                onsubmit="return confirm('¿Estás seguro de querer eliminar tu cuenta?');">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-                <button class="btn btn-danger">Eliminar usuario</button>
-            </form>
-        
+
+        <span data-toggle="modal" data-target="#modalPasswd" class="my-auto mr-2" style="cursor: pointer">
+            <input class="btn btn-primary" type="button"
+                value="Cambiar Contraseña">
+        </span>
+
+
+        <!-- Modal -->
+        <div class="modal" id="modalPasswd" tabindex="-1" role="dialog" aria-labelledby="modalPasswdTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="modalPasswdTitle">Cambiar Contraseña</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body justify-content-center d-flex text-center">
+                        <div class="col-8">
+                        {{form_start(formPasswd)}}
+                        {{form_row(formPasswd.old)}}
+                        {{form_row(formPasswd.new)}}
+                        <div class="text-center">
+                        {{form_widget(formPasswd.submit)}}</div>
+                        {{form_end(formPasswd)}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <form class="my-auto" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}"
+            onsubmit="return confirm('¿Estás seguro de querer eliminar tu cuenta?');">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+            <button class="btn btn-danger">Eliminar usuario</button>
+        </form>
+
     </span>
 </div>
 

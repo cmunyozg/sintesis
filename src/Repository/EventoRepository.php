@@ -29,7 +29,7 @@ class EventoRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->where('e.usuario = :usuario')
             ->setParameter('usuario', $usuario)
-            ->orderBy('e.fechaInicio', 'ASC')
+            ->orderBy('e.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -53,8 +53,13 @@ class EventoRepository extends ServiceEntityRepository
     public function findEvents($clave, $categoriaID, $inicio, $fin, $gratis)
     {
         $query = $this->createQueryBuilder('e');
-        if (!is_null($categoriaID)) $query->where('e.categoria = :categoria')
-            ->setParameter('categoria', $categoriaID)->getQuery()->getResult();
-        return $query;
+        if (!is_null($clave)) $query->andWhere('e.descripcion LIKE :clave OR e.titulo LIKE :clave')->setParameter('clave', '%' . $clave . '%');
+        if ($categoriaID != 0) $query->andWhere('e.categoria = :categoria')->setParameter('categoria', $categoriaID);
+        if (!is_null($inicio)) $query->andWhere('e.fechaInicio >= :inicio')->setParameter('inicio', $inicio);
+        if (!is_null($fin)) $query->andWhere('e.fechaInicio <= :fin')->setParameter('fin', $fin);
+        if ($gratis) $query->andWhere('e.precio = 0');
+        $result = $query->orderBy('e.fechaInicio', 'ASC')->getQuery()->getResult();
+
+        return $result;
     }
 }

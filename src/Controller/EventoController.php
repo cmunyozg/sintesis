@@ -75,20 +75,20 @@ class EventoController extends AbstractController
             $em->persist($event);
             $em->flush();
 
-            // // Envío de email
-            // $message = (new \Swift_Message())
-            //     ->setFrom(['sintesis095@gmail.com' => 'Síntesis'])
-            //     ->setTo($event->getUsuario()->getEmail())
-            //     ->setSubject("Hemos bloqueado una de tus publicaciones.")
-            //     ->setBody(
-            //         $this->renderView(
-            //             'emails/block.html.twig',
-            //             ['user' => $event->getUsuario(),
-            //             'event' => $event]
-            //         ),
-            //         'text/html'
-            //     );
-            // $mailer->send($message);
+            // Envío de email
+            $message = (new \Swift_Message())
+                ->setFrom(['sintesis095@gmail.com' => 'Síntesis'])
+                ->setTo($event->getUsuario()->getEmail())
+                ->setSubject("Hemos bloqueado una de tus publicaciones.")
+                ->setBody(
+                    $this->renderView(
+                        'emails/block.html.twig',
+                        ['user' => $event->getUsuario(),
+                        'event' => $event]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
         }
 
         return $this->redirectToRoute('reporte_index');
@@ -200,6 +200,7 @@ class EventoController extends AbstractController
     {
         // Sólo permite editar si el usuario logeado es el creador del evento, si no deniega acceso.
         if ($evento->getUsuario() == $this->getUser()) {
+            $mensaje = null;
             $form = $this->createForm(EventoType::class, $evento);
             $form->handleRequest($request);
 
@@ -221,36 +222,25 @@ class EventoController extends AbstractController
                             $this->getParameter('imagenes_eventos'),
                             $newFilename
                         );
+                        $evento->setImagen($newFilename);
                     } catch (FileException $e) {
-                        return $this->render('evento/edit.html.twig', [
-                            'evento' => $evento,
-                            'form' => $form->createView(),
-                            'mensaje' => 2 //error
-                        ]);
+                        $mensaje = 2; //error
                     }
-                    $evento->setImagen($newFilename);
                 }
 
                 try {
                     $this->getDoctrine()->getManager()->flush();
+                    $mensaje = 1; //exito
                 } catch (\Exception $e) {
-                    return $this->render('evento/edit.html.twig', [
-                        'evento' => $evento,
-                        'form' => $form->createView(),
-                        'mensaje' => 2 //error
-                    ]);
+                        $mensaje = 2; //error
+                   
                 }
-
-                return $this->render('evento/edit.html.twig', [
-                    'evento' => $evento,
-                    'form' => $form->createView(),
-                    'mensaje' => 1 //éxito
-                ]);
             }
 
             return $this->render('evento/edit.html.twig', [
                 'evento' => $evento,
                 'form' => $form->createView(),
+                'mensaje' => $mensaje
 
             ]);
         } else throw new AccessDeniedException();

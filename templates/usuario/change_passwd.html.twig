@@ -3,8 +3,15 @@
 {% block title %}Cambiar contraseña | Síntesis{% endblock %}
 
 {% block contenidoUsuario %}
-<h1>Cambiar Contraseña</h1>
 
-{{form(form)}}
+<div class="col-4 mx-auto">
+<h1 class="mb-3">Cambiar Contraseña</h1>
+{{form_start(form)}}
+{{form_row(form.old)}}
+{{form_row(form.new)}}
+<div class="text-center">
+{{form_widget(form.submit)}}</div>
+{{form_end(form)}}
 
+</div>
 {% endblock %}

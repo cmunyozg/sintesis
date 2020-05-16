@@ -35,6 +35,23 @@ class SuscripcionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Suscripcion[] 
+     */
+    public function findByDate(\DateTime $desde, \DateTime $hasta){
+        return $this->createQueryBuilder('s')
+        ->innerJoin('s.evento', 'e')
+        ->innerJoin('s.usuario', 'u')
+        ->where('e.fechaInicio >= :desde')
+        ->andWhere('e.fechaInicio <= :hasta')
+        ->setParameter('desde', $desde->format('Y-m-d'))
+        ->setParameter('hasta', $hasta->format('Y-m-d'))
+        ->getQuery()
+        ->getResult();
+
+
+    }
+
        /**
      * @return Suscripcion[] 
      */

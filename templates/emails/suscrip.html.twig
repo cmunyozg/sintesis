@@ -1,0 +1,21 @@
+{# templates/emails/block.html.twig #}
+<h2>Este evento comenzará próximamente</h2>
+
+<p>Hola {{ user.nombre }}, te recordamos que queda muy poco para uno de los eventos a los que te has suscrito.</p>
+{% if event.imagen %}
+<img src="{{absolute_url(asset('uploads/eventos/' ~ event.imagen))}}" class="img-fluid rounded" alt="" srcset="">
+{% else %}
+<img src="{{absolute_url(asset('img/defecto.jpg'))}}" class="img-fluid rounded" alt="" srcset="">
+{% endif %}
+<h4>{{event.titulo}}</h4>
+<p>
+    Ubicación: {{event.ubicacion}}<br>
+    Fecha y hora: {{ event.fechaInicio|fecha ~ ' a las ' ~ event.hora|date('H:i')}} <br>
+    Precio: {{ event.precio == 0 ? 'GRATIS' : event.precio/100 ~'€'}}<br>
+
+</p>
+<p>
+    Puedes ver todos los detalles haciendo click <a href="{{url('evento_show', {'id': event.id})}}">aquí</a>.
+</p>
+<hr>
+<div style="text-align: center;"><img src="{{ absolute_url(asset('img/logo-fondo-blanco.png')) }}"></div>

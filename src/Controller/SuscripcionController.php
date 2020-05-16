@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Evento;
 use App\Entity\Suscripcion;
 use App\Repository\SuscripcionRepository;
+use DateInterval;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SuscripcionController extends AbstractController
@@ -21,6 +22,7 @@ class SuscripcionController extends AbstractController
         $suscripciones = $suscripRepository->findByUser($user);
         $proximos = [];
         $now = new \DateTime();
+        
 
         for ($i = 0; $i < count($suscripciones); $i++) {
             $event = $suscripciones[$i]->getEvento();
@@ -29,7 +31,7 @@ class SuscripcionController extends AbstractController
         }
 
         return $this->render('suscripcion/index.html.twig', [
-            'proximos' => $proximos
+            'proximos' => $proximos,
         ]);
     }
 

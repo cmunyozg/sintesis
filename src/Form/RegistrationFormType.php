@@ -48,10 +48,10 @@ class RegistrationFormType extends AbstractType
                 DateType::class,
                 [
                     'label' => 'Fecha de Nacimiento',
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                     'view_timezone' => 'Europe/Madrid',
-                    'format' => 'd / MMMM / yyyy',
-                    'years' => $this->getYears()
+                    // 'format' => 'd / MMMM / yyyy',
+                    // 'years' => $this->getYears()
                 ]
             )
             ->add('agreeTerms', CheckboxType::class, [
@@ -69,18 +69,18 @@ class RegistrationFormType extends AbstractType
     }
 
     // Años de nacimiento para usuarios de 16 - 90 años
-    public function getYears(): array
-    {
-        $actualYear = (new \DateTime())->format('Y');
-        $max = $actualYear - 16;
-        $min = $actualYear - 90;
-        $arrayYears = [];
+    // public function getYears(): array
+    // {
+    //     $actualYear = (new \DateTime())->format('Y');
+    //     $max = $actualYear - 16;
+    //     $min = $actualYear - 90;
+    //     $arrayYears = [];
 
-        for ($i = $max; $i >= $min; $i--) {
-            array_push($arrayYears, $i);
-        }
-        return $arrayYears;
-    }
+    //     for ($i = $max; $i >= $min; $i--) {
+    //         array_push($arrayYears, $i);
+    //     }
+    //     return $arrayYears;
+    // }
 
 
     public function configureOptions(OptionsResolver $resolver)

@@ -5,23 +5,21 @@
 {% block contenido %}
 <div class="col-3 mx-auto text-center">
 
-<h1 class="mb-3">Registro</h1>
-{{ form_start(registrationForm) }}
+    <h1 class="mb-3">Registro</h1>
+    {{ form_start(registrationForm) }}
 
-{{ form_row(registrationForm.alias) }}
-{{ form_row(registrationForm.nombre) }}
-<div class="form-group">
-    {{ form_label(registrationForm.fechaNacimiento) }}
-    {{ form_errors(registrationForm.fechaNacimiento) }}
-    {{ form_widget(registrationForm.fechaNacimiento, {'attr': {'class': 'justify-content-center'}}) }}
-    </div>
-{{ form_row(registrationForm.email) }}
-{{ form_row(registrationForm.password) }}
-
-{{form_row(registrationForm.agreeTerms)}}
-{{form_row(registrationForm.registrarse)}}
-
-{{ form_end(registrationForm) }}
+    {{ form_row(registrationForm.alias) }}
+    {{ form_row(registrationForm.nombre) }}
+    {{ form_row(registrationForm.fechaNacimiento) }}
 
 
-{% endblock %}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.password) }}
+
+    {{form_row(registrationForm.agreeTerms)}}
+    {{form_row(registrationForm.registrarse)}}
+
+    {{ form_end(registrationForm) }}
+
+
+    {% endblock %}

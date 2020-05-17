@@ -9,7 +9,7 @@ class ChangePasswd
 {
     /**
      * @SecurityAssert\UserPassword(
-     *     message = "Error al poner la contraseña actual"
+     *     message = "Error al poner la contraseña actual."
      * )
      */
     protected $old;
@@ -17,7 +17,7 @@ class ChangePasswd
     /**
      * @Assert\Length(
      *     min = 6,
-     *     minMessage = "El password tiene que tener al menos 6 caracteres"
+     *     minMessage = "El password tiene que tener al menos 6 caracteres."
      * )
      */
     protected $new;

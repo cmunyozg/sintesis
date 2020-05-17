@@ -117,7 +117,7 @@ header {
 #map {
     
     margin-bottom: 15px;
-    height: 600px;
+    height: 500px;
 }
 #infowindow {
     display: none;
@@ -138,6 +138,14 @@ button {
 .pointer{
     cursor: pointer;
 }
+
+#divCookies {
+    position: fixed;
+    margin: auto;
+    bottom: 5px;
+    width: 70%;
+    z-index: 111;
+  }
 
 footer {
     background-color: #c5c5c5;

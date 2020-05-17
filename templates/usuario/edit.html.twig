@@ -71,17 +71,21 @@
                     </div>
                     <div class="modal-body text-center">
                         <p>¿Está seguro de querer eliminar su usuario?</p>
+                        <p>Se eliminarán todas las publicaciones y los datos asociados</p>
                         <div class="justify-content-center d-flex mt-2">
-                        <form class="mr-2" method="post" action="{{ path('usuario_delete', {'id': app.user.id}) }}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
-                            <button class="btn btn-danger">Eliminar</button>
-                        </form>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                            Cancelar
-                        </button></div>
+                            <form class="mr-2" method="post" action="{{ path('usuario_edit', {'id': app.user.id}) }}">
+                                <div class="form-group">
+                                    <label for="passwdInput"> Contraseña:</label>
+                                    <input type="password" name="passwd" id="passwdInput">
+                                </div>
+                                <button class="btn btn-danger">Eliminar</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                   Cancelar
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

@@ -6,7 +6,8 @@ use App\Entity\Usuario;
 use App\Form\UsuarioType;
 use App\Form\Model\ChangePasswd;
 use App\Form\ChangePasswdType;
-use DateTime;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ class UsuarioController extends AbstractController
     /**
      * @Route("/datos", name="usuario_datos")
      * @IsGranted("ROLE_USER")
+     * Muestra al usuario sus datos
      */
     public function datos(): Response
     {
@@ -39,6 +41,7 @@ class UsuarioController extends AbstractController
 
     /**
      * @Route("/{id}", name="usuario_perfil")
+     * Perfil público del usuario
      */
     public function perfil(Usuario $user): Response
     {
@@ -48,7 +51,7 @@ class UsuarioController extends AbstractController
         $actuales = array();
         $pasados = array();
         if ($eventos) {
-            $now = new DateTime();
+            $now = new \DateTime();
             foreach ($eventos as $evento) {
                 if (!$evento->getBloqueado() && $evento->getVisible()) {
                     if ($evento->getFechaInicio() < $now) array_push($pasados, $evento);
@@ -69,6 +72,7 @@ class UsuarioController extends AbstractController
     /**
      * @Route("/{id}/edit", name="usuario_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
+     * Edita los datos del usuario, cambia su contraseña o elimina el usuario en función del formulario que complete.
      */
     public function edit(Request $request, Usuario $usuario, $id, ChangePasswd $changepasswd, UserPasswordEncoderInterface $encoder): Response
     {
@@ -118,26 +122,40 @@ class UsuarioController extends AbstractController
                 };
             }
 
+            if ($formPasswd->isSubmitted()) {
+                if ($formPasswd->isValid()) {
+                    try {
+                        $usuario = $this->getUser();
+                        $usuario->setPasswd(
+                            $encoder->encodePassword(
+                                $usuario,
+                                $changepasswd->getNew()
+                            )
+                        );
 
+                        $em->persist($usuario);
+                        $em->flush();
+                        $mensaje = 1; //exito
+                    } catch (\Exception $e) {
+                        $mensaje = 2; // error
 
-            if ($formPasswd->isSubmitted() && $formPasswd->isValid()) {
-
-                $usuario = $this->getUser();
-                $usuario->setPasswd(
-                    $encoder->encodePassword(
-                        $usuario,
-                        $changepasswd->getNew()
-                    )
-                );
-                try {
-                    $em->persist($usuario);
-                    $em->flush();
-                    $mensaje = 1; //exito
-                } catch (\Exception $e) {
-                    $mensaje = 2; // error
-
-                };
+                    }
+                } else $mensaje = 2;
             }
+
+            // Elimina suario si se ha hecho uso del formulario delete
+            if ($passwd = $request->request->get('passwd', false)) {
+                // Si la contraseña introducida es la del usuario, lo elimina y borra la sesión
+                if ($encoder->isPasswordValid($usuario, $passwd)) {
+                    $em->remove($usuario);
+                    $em->flush();
+                    $request->getSession()->invalidate();
+                    return $this->redirectToRoute('app_logout');
+                } else {
+                    $mensaje = 2;
+                }
+            }
+
 
             return $this->render('usuario/edit.html.twig', [
                 'usuario' => $usuario,
@@ -148,19 +166,4 @@ class UsuarioController extends AbstractController
         } else throw new AccessDeniedException();
     }
 
-
-    /**
-     * @Route("/{id}", name="usuario_delete", methods={"DELETE"})
-     * @IsGranted("ROLE_USER")
-     */
-    public function delete(Request $request, Usuario $usuario): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $usuario->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($usuario);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('usuario_index');
-    }
 }

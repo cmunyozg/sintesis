@@ -105,12 +105,15 @@
                     class="btn btn-danger">CANCELAR SUSCRIPCIÓN</button></a>
             {% else %}
             <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
-                    class="btn btn-danger">SUSCRÍBETE</button></a>
+                class="btn btn-danger">SUSCRÍBETE</button></a><br>
+                <small>Suscríbete y recibiras un recordatorio en tu email 24 horas antes</small>
             {% endif %}
             {% endif %}
             {% else %}
+            
             <a href="{{path('suscripcion_add', {'eventoID' : evento.id})}}"><button
-                    class="btn btn-danger">SUSCRÍBETE</button></a>
+                    class="btn btn-danger">SUSCRÍBETE</button></a><br>
+                    <small>Suscríbete y recibiras un recordatorio en tu email 24 horas antes</small>
             {% endif %}
         </div>
 

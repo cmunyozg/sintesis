@@ -305,7 +305,7 @@ class EventoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="evento_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="evento_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Evento $evento): Response
     {

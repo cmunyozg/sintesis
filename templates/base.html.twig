@@ -9,8 +9,8 @@
         Síntesis
         {% endblock %}
     </title>
-    <link rel="shortcut icon" type="image/ico" href="{{asset('img/favicon.ico')}}"/>
-    
+    <link rel="shortcut icon" type="image/ico" href="{{asset('img/favicon.ico')}}" />
+
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
     {% block css %}{% endblock %}
@@ -41,13 +41,13 @@
 
                 <li class="nav-item mx-1">
                     <a class="nav-link" href="{{path('evento_new')}}">PUBLICAR EVENTO <i class="fas fa-plus-circle"
-                        aria-hidden="true"></i></a>
+                            aria-hidden="true"></i></a>
                 </li>
-                
+
                 <li class="nav-item mx-1">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="nav-link"
-                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user" aria-hidden="true"></i></a>
+                    <a class="nav-link" href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user"
+                            aria-hidden="true"></i></a>
                     {% else %}
                     <a class="nav-link " href="{{path('app_login')}}">INICIAR
                         SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
@@ -82,13 +82,14 @@
                 </li>
 
                 <li class="nav-item mx-1">
-                    <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO <i class="fas fa-plus-circle"
-                        aria-hidden="true"></i></a>
+                    <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO <i
+                            class="fas fa-plus-circle" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item mx-1">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="navLinkHeader nav-link text-white btnSesion"
-                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user" aria-hidden="true"></i></a>
+                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user"
+                            aria-hidden="true"></i></a>
                     {% else %}
                     <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
                         SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
@@ -114,7 +115,17 @@
         </div>
 
     </main>
+    <!-- COOKIES-->
+    <div class="d-flex justify-content-center">
+        <div id="divCookies" class="alert alert-warning text-center oculto" role="alert">
+            <p>
+                En esta página utilizamos cookies para mejorar la navegación de nuestros
+                usuarios y mejorar nuestros servicios. Si acepta o continúa navegando, consideramos que acepta su uso.
 
+            </p>
+            <strong onclick="aceptarCookies()" class="pointer">Aceptar cookies.</strong>
+        </div>
+    </div>
     <!-- FOOTER -->
     <footer class="row mt-auto">
         <div class="col-12">
@@ -129,9 +140,12 @@
         </div>
     </footer>
 
+
+
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/headerFixed.js') }}"></script>
+    <script src="{{ asset('js/avisoCookies.js') }}"></script>
     {% block javascripts %}{% endblock %}
 </body>
 

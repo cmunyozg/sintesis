@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
@@ -71,6 +72,7 @@ class Usuario implements UserInterface
      * @Assert\NotBlank(
      *     message = "Campo requerido."
      * )
+     * @CustomAssert\MoreThan16
      */
     private $fechaNacimiento;
 
@@ -95,7 +97,7 @@ class Usuario implements UserInterface
     private $suscripciones;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evento", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="App\Entity\Evento", mappedBy="usuario", orphanRemoval=true)
      */
     private $eventos;
 

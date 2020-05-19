@@ -305,15 +305,16 @@ class EventoController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="evento_delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="evento_delete", methods={"POST"})
+     * @IsGranted("ROLE_USER")
      */
-    public function delete(Request $request, Evento $evento): Response
+    public function delete(Evento $evento): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $evento->getId(), $request->request->get('_token'))) {
+        if ($evento->getUsuario() == $this->getUser()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($evento);
             $entityManager->flush();
-        }
+        } else throw new AccessDeniedException();
 
         return $this->redirectToRoute('evento_index');
     }

@@ -51,10 +51,10 @@ class UsuarioController extends AbstractController
         $actuales = array();
         $pasados = array();
         if ($eventos) {
-            $now = new \DateTime();
+            $today = new \DateTime('today');
             foreach ($eventos as $evento) {
                 if (!$evento->getBloqueado() && $evento->getVisible()) {
-                    if ($evento->getFechaInicio() < $now) array_push($pasados, $evento);
+                    if ($evento->getFechaInicio() < $today) array_push($pasados, $evento);
                     else array_push($actuales, $evento);
                 }
             }

@@ -55,8 +55,8 @@ class EventoRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('e');
         if (!is_null($clave)) $query->andWhere('e.descripcion LIKE :clave OR e.titulo LIKE :clave')->setParameter('clave', '%' . $clave . '%');
         if ($categoriaID != 0) $query->andWhere('e.categoria = :categoria')->setParameter('categoria', $categoriaID);
-        if (!is_null($inicio)) $query->andWhere('e.fechaInicio >= :inicio')->setParameter('inicio', $inicio);
-        if (!is_null($fin)) $query->andWhere('e.fechaInicio <= :fin')->setParameter('fin', $fin);
+        if (!is_null($inicio)) $query->andWhere('e.fechaFin >= :inicio OR e.fechaInicio >= :inicio')->setParameter('inicio', $inicio);
+        if (!is_null($fin)) $query->andWhere('e.fechaFin <= :fin OR e.fechaInicio <= :fin')->setParameter('fin', $fin);
         if ($gratis) $query->andWhere('e.precio = 0');
         $query->andWhere('e.bloqueado = 0');
         $result = $query->orderBy('e.fechaInicio', 'ASC')->getQuery()->getResult();

@@ -80,7 +80,7 @@
                                 </div>
                                 <button class="btn btn-danger">Eliminar</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
-                                   Cancelar
+                                    Cancelar
                                 </button>
                             </form>
                         </div>
@@ -160,4 +160,7 @@
 {{ form_end(form) }}
 
 
+{% endblock %}
+{% block javascripts %}
+<script src="{{asset('js/labelImagen.js')}}"></script>
 {% endblock %}

@@ -32,7 +32,7 @@
             <td class="align-middle pointer">{{ evento.hora|date('H:i') }}</td>
             <td class="align-middle pointer">{{ evento.ubicacion }}</td>
             <td class="align-middle pointer">{{ evento.precio ? evento.precio/100 ~ '€' : '-' }}</td>
-            <td class="align-middle pointer">{{ evento.descripcion|slice(0,80) ~ '...' }}</td>
+            <td class="align-middle pointer">{{evento.descripcion|descripcion(14)}}</td>
 
             <td class="align-middle">
                 {% if evento.visible %}

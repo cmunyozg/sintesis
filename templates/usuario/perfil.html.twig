@@ -43,10 +43,14 @@
         {% endif %}
         <div class="card-body text-center">
             <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
-            <p class="card-text">{{evento.descripcion|slice(0,150) ~ '...'}}</p>
-            <hr>
-            <p class="text-center mt-2">{{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}</p>
-            <p>Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
+            <p class="card-text">
+                {{evento.descripcion|descripcion(20)}}
+                <hr>
+                {{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}
+                {% if evento.fechaFin %} <br> — <br>{{evento.fechaFin|fecha|capitalize}} {% endif %}
+                <hr>
+                Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}
+            </p>
         </div>
     </a>
     {% endfor %}
@@ -72,9 +76,9 @@
         {% for evento in pasados %}
         <tr data-href={{path('evento_show', {'id': evento.id})}}>
             <td class="align-middle pointer">{{ evento.titulo }}</td>
-            <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
+            <td class="align-middle pointer">{{ evento.fechaInicio|date('d/m/Y') }}</td>
             <td class="align-middle pointer">{{ evento.ubicacion }}</td>
-            <td class="align-middle pointer">{{ evento.descripcion|slice(0,80) ~ '...' }}</td>
+            <td class="align-middle pointer">{{evento.descripcion|descripcion(15)}}</td>
         </tr>
         {% endfor %}
     </tbody>

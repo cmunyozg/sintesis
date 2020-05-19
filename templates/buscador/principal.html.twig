@@ -5,7 +5,7 @@
 <div class="row justify-content-center buscador">
     <h1 class="tituloBuscador">Busca qué hacer en Valencia</h1>
     <div class="col-8">
-        <form class="row justify-content-around" action="{{path('buscador')}}" method="POST">
+        <form class="row justify-content-around" action="{{path('buscador')}}" method="POST" id="formBuscador">
 
             <div class="col-auto form-group">
                 <label for="" class="ml-1">Palabras clave</label>
@@ -28,12 +28,12 @@
             <div class="col-auto form-group ">
                 <label for="" class="ml-1">Desde</label>
                 <input {% if inicio is defined %} value="{{inicio}}" {% else %} value="{{ "now"|date("Y-m-d") }}"
-                    {% endif %} name="desde" type="date" class="form-control">
+                    {% endif %} name="desde" type="date" id="fechaInicio" class="form-control">
             </div>
             <div class="col-auto form-group">
                 <label for="" class="ml-1">Hasta</label>
 
-                <input {% if fin is defined %} value="{{fin}}" {% endif %} name="hasta" type="date"
+                <input {% if fin is defined %} value="{{fin}}" {% endif %} name="hasta" type="date" id="fechaFin"
                     class="form-control">
             </div>
             <div class="col-auto form-group align-self-center">
@@ -47,8 +47,8 @@
             </div>
 
             <div class="col-auto align-self-center">
-                <button type="submit" class="btn btn-block btnBuscar"><img src="img/flecha-derecha.png" alt="" srcset=""
-                        height="20px"></button>
+                <button type="submit" class="btn btn-block btnBuscar"><img src="{{asset('img/flecha-derecha.png')}}"
+                        alt="" srcset="" height="20px"></button>
             </div>
 
 
@@ -66,13 +66,13 @@
 
 <!-- EVENTOS -->
 <!-- MAPA -->
-<div id="map"></div>
+<div id="map" class="rounded"></div>
 
-    <a href="" id="infowindow" class="text-center">
-        {# <img src="" width="16" height="16" id="place-icon"> #}
-        <p  id="titulo"></p>
-        <p id="info"></p>
-    </a>
+<a href="" id="infowindow" class="text-center">
+    {# <img src="" width="16" height="16" id="place-icon"> #}
+    <p id="titulo"></p>
+    <p id="info"></p>
+</a>
 
 
 <!-- Cards -->
@@ -86,15 +86,21 @@
         {% endif %}
         <div class="card-body text-center">
             <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
-            <p class="card-text">{{evento.descripcion|slice(0,150) ~ '...'}}</p>
-            <hr>
-            <p class="text-center mt-2">{{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}</p>
-            <p>Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}</p>
+            <p class="card-text">
+                {{evento.descripcion|descripcion(20)}}
+                <hr>
+                {{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}
+                {% if evento.fechaFin %} <br> — <br>{{evento.fechaFin|fecha|capitalize}} {% endif %}
+                <hr>
+                Precio: {{ evento.precio == 0 ? 'GRATIS' : evento.precio/100 ~'€'}}
+            </p>
         </div>
-        <p class="d-none datos">
+        <p class="d-none datos"> {# para JS Google Maps#}
             {{evento.id ~ ',' ~ evento.titulo ~ ',' ~ evento.coordenadas~ ',' ~ evento.fechaInicio|date('d/m/Y') ~ ' - ' ~ evento.hora|date('H:i') }}
         </p>
     </a>
+    {% else %}
+    <h4>No existen eventos para el criterio de búsqueda seleccionado</h4>
     {% endfor %}
 </div>
 {% endblock %}
@@ -105,4 +111,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD76HFXmHnRneZtfK3sY2ROwKM9i26LeFY&callback=initMap" async
     defer>
     </script>
+<script src="{{asset('js/validacionBuscador.js')}}"></script>
+
 {% endblock %}

@@ -43,8 +43,8 @@
                     <p>¿Está seguro de querer eliminar esta publicación?</p>
                     <div class="justify-content-center d-flex mt-2">
                         <form method="post" action="{{ path('evento_delete', {'id': evento.id}) }}" class="mr-2">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evento.id) }}">
+                            {# <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evento.id) }}"> #}
                             <button class="btn btn-danger">Eliminar</button>
                         </form>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">

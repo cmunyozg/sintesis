@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as CustomAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventoRepository")
@@ -36,11 +37,16 @@ class Evento
      * @Assert\NotBlank(
      *     message = "Campo requerido."
      * )
+     * @CustomAssert\FechaInicio
      */
     private $fechaInicio;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * 
+     * @Assert\Expression(
+     *     "value > this.getFechaInicio() | value  == null",
+     *     message="La fecha de fin debería ser posterior a la de inicio.")
      */
     private $fechaFin;
 
@@ -64,7 +70,7 @@ class Evento
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
-     *     message = "Campo requerido."
+     *     message = "Error al procesar la ubicación."
      * )
      */
     private $coordenadas;
@@ -147,8 +153,8 @@ class Evento
      */
     private $fechaPublicacion;
 
-    
-   
+
+
 
     public function __construct()
     {
@@ -414,5 +420,4 @@ class Evento
 
         return $this;
     }
-
 }

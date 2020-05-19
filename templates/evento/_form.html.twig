@@ -66,15 +66,21 @@
         {{ form_row(form.descripcion) }}
     </div>
     <div class="col-12">
+
         {{ form_row(form.ubicacion) }}
     </div>
+
     <div class="col-12">
+        {{ form_errors(form.coordenadas)}}
         <div id="map-form"></div>
         <div id="infowindow">
             <img src="" width="16" height="16" id="place-icon">
             <span id="place-name" class="title"></span><br>
             <span id="place-address"></span>
         </div>
+    </div>
+    <div class="d-none">
+        {{form_row(form.coordenadas)}}
     </div>
 
 </div>
@@ -90,4 +96,5 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD76HFXmHnRneZtfK3sY2ROwKM9i26LeFY&libraries=places&callback=initMap"
     async defer>
     </script>
+<script src="{{asset('js/labelImagen.js')}}"></script>
 {% endblock %}

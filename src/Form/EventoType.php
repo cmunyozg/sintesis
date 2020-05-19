@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Evento;
-use Doctrine\DBAL\Types\DecimalType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -45,7 +44,7 @@ class EventoType extends AbstractType
                 'label' => 'Ubicación',
                 'help' => 'Introduce un nombre de establecimiento o una dirección.'
             ])
-            ->add('coordenadas', HiddenType::class)
+            ->add('coordenadas')
             ->add('precio', MoneyType::class, [
                 'divisor' => 100,
                 'required' => false,

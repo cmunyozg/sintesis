@@ -30,12 +30,11 @@
 </div>
 
 {% if actuales %}
-<hr>
-<h2 class="text-center mb-3 titulo"><strong>EVENTOS ACTUALES</strong></h2>
+<h2 class="text-center my-3 titulo rounded"><strong>EVENTOS ACTUALES</strong></h2>
 
 <div class="row justify-content-around d-flex align-items-center no-gutters">
     {% for evento in actuales %}
-    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-3 card cardEvento m-2">
+    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-md-5 col-xl-3 card cardEvento my-2 mx-1">
         {% if evento.imagen %}
         <img src="{{asset('uploads/eventos/' ~ evento.imagen)}}" class="card-img-top img-fluid">
         {% else %}
@@ -44,7 +43,7 @@
         <div class="card-body text-center">
             <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
             <p class="card-text">
-                {{evento.descripcion|descripcion(20)}}
+                {{evento.ubicacion|ubicacion}}
                 <hr>
                 {{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}
                 {% if evento.fechaFin %} <br> — <br>{{evento.fechaFin|fecha|capitalize}} {% endif %}
@@ -59,16 +58,15 @@
 {% endif %}
 
 {% if pasados %}
-<hr>
-<h2 class="text-center mb-3 titulo"><strong>EVENTOS ANTIGUOS</strong></h2>
+<h2 class="text-center my-3 titulo rounded"><strong>EVENTOS ANTIGUOS</strong></h2>
 <table class="table table-striped table-hover text-center tablaEnlace">
 
     <thead>
         <tr>
             <th>Título</th>
             <th>Fecha</th>
-            <th>Ubicación</th>
-            <th>Descripcion</th>
+            <th class="d-none d-sm-table-cell">Ubicación</th>
+            <th class="d-none d-lg-table-cell">Descripcion</th>
 
         </tr>
     </thead>
@@ -77,8 +75,8 @@
         <tr data-href={{path('evento_show', {'id': evento.id})}}>
             <td class="align-middle pointer">{{ evento.titulo }}</td>
             <td class="align-middle pointer">{{ evento.fechaInicio|date('d/m/Y') }}</td>
-            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
-            <td class="align-middle pointer">{{evento.descripcion|descripcion(15)}}</td>
+            <td class="align-middle pointer d-none d-sm-table-cell">{{ evento.ubicacion|ubicacion }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{evento.descripcion|descripcion(25)}}</td>
         </tr>
         {% endfor %}
     </tbody>

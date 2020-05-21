@@ -13,7 +13,9 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('fecha', [$this, 'formatearFecha']),
-            new TwigFilter('descripcion', [$this, 'formatearDescripcion'])
+            new TwigFilter('descripcion', [$this, 'formatearDescripcion']),
+            new TwigFilter('ubicacion', [$this, 'formatearUbicacion']),
+
         ];
     }
 
@@ -35,5 +37,17 @@ class AppExtension extends AbstractExtension
 
             return $resultado . '...';
         }
+    }
+
+    // Recibe la ubicación y la devuelve incluyendo hasta la ciudad
+    public function formatearUbicacion(string $ubicacion)
+    {
+        $arrayPartesUbicacion = explode(',', $ubicacion);
+
+        $resultado = '';
+        for ($i = 0; $i < count($arrayPartesUbicacion) - 1; $i++)
+            $resultado .= $arrayPartesUbicacion[$i].',';
+
+        return substr($resultado, 0, -1); //elimina la coma final
     }
 }

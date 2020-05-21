@@ -12,9 +12,9 @@
         <tr>
             <th>Título</th>
             <th>Fecha</th>
-            <th>Hora</th>
-            <th>Ubicación</th>
-            <th>Precio</th>
+            <th class="d-none d-sm-table-cell">Hora</th>
+            <th class="d-none d-md-table-cell">Ubicación</th>
+            <th class="d-none d-lg-table-cell">Precio</th>
 
 
             <th>Acciones</th>
@@ -25,9 +25,9 @@
         <tr data-href={{path('evento_show', {'id': evento.id})}}>
             <td class="align-middle pointer">{{ evento.titulo }}</td>
             <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
-            <td class="align-middle pointer">{{ evento.hora|date('H:i') }}</td>
-            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
-            <td class="align-middle pointer">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
+            <td class="align-middle pointer d-none d-sm-table-cell">{{ evento.hora|date('H:i') }}</td>
+            <td class="align-middle pointer d-none d-md-table-cell">{{ evento.ubicacion|ubicacion }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
 
             <td class="align-middle">
 

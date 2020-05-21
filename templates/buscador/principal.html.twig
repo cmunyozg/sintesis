@@ -2,19 +2,19 @@
 
 {% block buscador %}
 <!-- BUSCADOR -->
-<div class="row justify-content-center buscador">
-    <h1 class="tituloBuscador">Busca qué hacer en Valencia</h1>
-    <div class="col-8">
+<div class="row justify-content-center buscador text-center">
+    <h1 class="tituloBuscador col-12">Busca qué hacer en Valencia</h1>
+    <div class="col-9">
         <form class="row justify-content-around" action="{{path('buscador')}}" method="POST" id="formBuscador">
 
-            <div class="col-auto form-group">
-                <label for="" class="ml-1">Palabras clave</label>
+            <div class="col-md-auto form-group">
+                <label for="">Palabras clave</label>
                 <input type="text" name="clave" class="form-control" placeholder="Opcional" {% if clave is defined %}
                     value='{{clave}}' {% endif %}>
 
             </div>
-            <div class="col-auto form-group">
-                <label for="" class="ml-1">Categoría</label>
+            <div class="col-md-auto form-group">
+                <label for="">Categoría</label>
                 <select name="categoria" class="custom-select" id="">
                     <option value="0">Todas</option>
                     {% for c in categorias %}
@@ -25,13 +25,13 @@
                 </select>
             </div>
 
-            <div class="col-auto form-group ">
-                <label for="" class="ml-1">Desde</label>
+            <div class="col-md-auto form-group ">
+                <label for="">Desde</label>
                 <input {% if inicio is defined %} value="{{inicio}}" {% else %} value="{{ "now"|date("Y-m-d") }}"
                     {% endif %} name="desde" type="date" id="fechaInicio" class="form-control">
             </div>
-            <div class="col-auto form-group">
-                <label for="" class="ml-1">Hasta</label>
+            <div class="col-md-auto form-group">
+                <label for="">Hasta</label>
 
                 <input {% if fin is defined %} value="{{fin}}" {% endif %} name="hasta" type="date" id="fechaFin"
                     class="form-control">
@@ -78,7 +78,7 @@
 <!-- Cards -->
 <div class="row justify-content-around d-flex align-items-center no-gutters">
     {% for evento in eventos %}
-    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-3 card cardEvento m-2">
+    <a href="{{path('evento_show', {'id': evento.id})}}" class="col-md-5 col-xl-3 card cardEvento my-2 mx-1">
         {% if evento.imagen %}
         <img src="{{asset('uploads/eventos/' ~ evento.imagen)}}" class="card-img-top img-fluid">
         {% else %}
@@ -87,7 +87,7 @@
         <div class="card-body text-center">
             <h5 class="card-title text-danger"><strong> {{evento.titulo}}</strong></h5>
             <p class="card-text">
-                {{evento.descripcion|descripcion(20)}}
+                {{evento.ubicacion|ubicacion}}
                 <hr>
                 {{evento.fechaInicio|fecha|capitalize}} a las {{evento.hora|date('H:i')}}
                 {% if evento.fechaFin %} <br> — <br>{{evento.fechaFin|fecha|capitalize}} {% endif %}

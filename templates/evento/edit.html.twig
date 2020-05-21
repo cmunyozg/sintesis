@@ -5,7 +5,8 @@
 {% block contenidoUsuario %}
 {% if mensaje is defined and mensaje == 1 %}
 <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-    <strong>Evento publicado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}" class="alert-link">Click aquí para visualizarlo.</a>
+    <strong>Evento publicado correctamente. </strong><a href="{{ path('evento_show', {'id': evento.id}) }}"
+        class="alert-link">Click aquí para visualizarlo.</a>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -19,44 +20,47 @@
     </button>
 </div>
 {% endif %}
-<div class="justify-content-between d-flex">
-<h1>Editar Evento</h1>
-<span class="mr-4">
-    
+<div class="justify-content-between align-items-center mb-2 d-flex">
+    <h1>Editar Evento</h1>
+    <span class="mr-4 d-none d-sm-block">
 
+        <span data-toggle="modal" data-target="#modalDelete"  style="cursor: pointer">
+            <input class="btn btn-danger" type="button" value="Eliminar Evento">
+        </span>
+
+    </span>
+</div>
+
+<div class="col-12 text-center d-sm-none mb-3">
     <span data-toggle="modal" data-target="#modalDelete" class="my-auto" style="cursor: pointer">
         <input class="btn btn-danger" type="button" value="Eliminar Evento">
     </span>
+</div>
 
-    <!-- Modal Delete Event-->
-    <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center" id="modalDeleteTitle">Eliminar Evento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>¿Está seguro de querer eliminar esta publicación?</p>
-                    <div class="justify-content-center d-flex mt-2">
-                        <form method="post" action="{{ path('evento_delete', {'id': evento.id}) }}" class="mr-2">
-                            {# <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evento.id) }}"> #}
-                            <button class="btn btn-danger">Eliminar</button>
-                        </form>
+<!-- Modal Delete Event-->
+<div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="modalDeleteTitle">Eliminar Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>¿Está seguro de querer eliminar esta publicación?</p>
+                <div class="justify-content-center d-flex mt-2">
+                    <form method="post" action="{{ path('evento_delete', {'id': evento.id}) }}" class="mr-2">
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
                         Cancelar
-                    </button></div>
+                    </button>
                 </div>
-                
             </div>
+
         </div>
     </div>
-
-</span>
 </div>
 {{ include('evento/_form.html.twig', {'button_label': 'Actualizar datos'}) }}
 

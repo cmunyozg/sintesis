@@ -1,3 +1,13 @@
+@media screen and (max-width:500px) {
+    .tituloBuscador {
+        font-size: 40px !important;
+    }
+    #map {
+        height: 400px !important;
+    }
+  }
+
+
 a:link,
 a:visited,
 a:active {
@@ -8,6 +18,9 @@ a:active {
 p{
     margin: 0;
  
+}
+hr{
+    margin:5px;
 }
 
 
@@ -41,7 +54,7 @@ header {
     background-image: url("../img/header.jpg");
     background-size: cover;
     background-position-y: center;
-    height: 230px;
+    height: 235px;
     padding-top: 55px;
     padding-bottom: 70px;
     margin-bottom: 0px;
@@ -49,30 +62,47 @@ header {
     border-bottom: 5px solid #fcc40f;
 }
 
-.navHeader {
-    background: rgba(0, 0, 0, 0.671);
-    height: 50px;
-    border-radius: 18px;
-    font-size: 20px;
-    font-weight: bold;
+header img {
+    width: 100%;
 }
 
-.navLinkHeader:hover {
-    background: rgba(107, 107, 107, 0.671);
+.navHeader {
+   
+    height: 50px;
+    z-index: 100;
+}
+
+header .navbar-nav{
+    background: rgba(0, 0, 0, 0.671);
+    border-radius: 18px;
+    font-size: 19px;
+    font-weight: bold;
+    
+    text-align: center;
+}
+header .navbar-toggler{
+    background: rgba(0, 0, 0, 0.671);
+}
+.navLinkHeader{
     border-radius: 10px;
     vertical-align: middle;
     margin-top: 3px;
     padding-top: 5px;
     height: 40px;
+}
+.navLinkHeader:hover {
+    background: rgba(107, 107, 107, 0.671);
+    
 }
 
 .btnSesion {
     background-color: #dc3545;
     border-radius: 10px;
     vertical-align: middle;
-    margin-top: 3px;
-    padding-top: 5px;
-    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    height: 35px;
 }
 
 .buscador {
@@ -109,7 +139,6 @@ header {
     margin-right: 15px;
     margin-left: 15px;
     margin-bottom: 30px;
-    border-radius: 5px;
     padding: 18px;
 
 }
@@ -141,9 +170,7 @@ button {
 
 #divCookies {
     position: fixed;
-    margin: auto;
-    bottom: 5px;
-    width: 70%;
+    bottom: 0px;
     z-index: 111;
   }
 

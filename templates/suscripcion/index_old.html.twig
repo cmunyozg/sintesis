@@ -12,9 +12,9 @@
         <tr>
             <th>Título</th>
             <th>Fecha</th>
-            <th>Hora</th>
-            <th>Ubicación</th>
-            <th>Precio</th>
+            <th class="d-none d-sm-table-cell">Hora</th>
+            <th class="d-none d-md-table-cell">Ubicación</th>
+            <th class="d-none d-lg-table-cell">Precio</th>
 
 
             <th>Acciones</th>
@@ -25,16 +25,17 @@
         <tr data-href={{path('evento_show', {'id': evento.id})}}>
             <td class="align-middle pointer">{{ evento.titulo }}</td>
             <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
-            <td class="align-middle pointer">{{ evento.hora|date('H:i') }}</td>
-            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
-            <td class="align-middle pointer">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
+            <td class="align-middle pointer d-none d-sm-table-cell">{{ evento.hora|date('H:i') }}</td>
+            <td class="align-middle pointer d-none d-md-table-cell">{{ evento.ubicacion|ubicacion }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{ evento.precio ? evento.precio/100 ~ '€' : '0€' }}</td>
 
             <td class="align-middle">
-            
-                <span data-toggle="modal" data-target="#modalBorrar" style="cursor: pointer">
-                    <i class="fas fa-trash-alt fa-lg"></i>
+
+
+                <span data-toggle="modal" data-target="#modalBorrar">
+                    <i class="fas fa-trash-alt fa-lg pointer"></i>
                 </span>
-                <!-- Modal Borrar Reporte-->
+                <!-- Modal Borrar Suscripción-->
                 <div class="modal text-left" id="modalBorrar" tabindex="-1" role="dialog"
                     aria-labelledby="modalBorrarTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -46,7 +47,7 @@
                                 </button>
                             </div>
                             <div class="modal-body text-center">
-                                <a href="{{ path('suscripcion_remove', {'eventoID': evento.id, 'originPath': 'suscrip_old'}) }}"><button
+                                <a href="{{ path('suscripcion_remove', {'eventoID': evento.id, 'originPath': 'suscrip'}) }}"><button
                                         class="btn btn-danger">Eliminar</button></a>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
                                     Cancelar
@@ -55,7 +56,6 @@
                         </div>
                     </div>
                 </div>
-
             </td>
         </tr>
         {% else %}

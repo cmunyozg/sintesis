@@ -26,12 +26,12 @@
     <!-- HEADER FIXED -->
     <div class="headerFixed row justify-content-around oculto">
         <!-- LOGO -->
-        <div class="d-flex col-auto align-items-center"><a href="{{path('principal')}}"><img
+        <div class="d-flex col-auto"><a href="{{path('principal')}}"><img
                     src="{{ asset('img/logo-negro.png') }}" height="70px" alt=""></a>
         </div>
 
         <!-- NAV -->
-        <nav class="d-flex navFixed navbar navbar-expand align-self-center">
+        <nav class="d-flex navFixed navbar navbar-expand">
 
             <ul class="navbar-nav mr-auto">
 
@@ -70,41 +70,45 @@
     <header class="row justify-content-around">
         <!-- LOGO -->
 
-        <div class="d-flex col-auto align-items-center"><a href="{{path('principal')}}"><img
+        <div class="d-flex col-auto mx-3"><a href="{{path('principal')}}"><img
                     src="{{ asset('img/logo.png') }}" alt="" srcset=""></a></div>
         <!-- NAV -->
-        <nav class="navHeader navbar navbar-expand align-self-center">
+        <nav class="navHeader navbar navbar-dark navbar-expand-sm align-self-center justify-content-center p-1">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
+                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarHeader">
+                <ul class="navbar-nav mr-auto">
 
-            <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown mx-1 d-none d-sm-block">
+                        <a class="navLinkHeader nav-link text-white dropdown-toggle" href="#" id="navbarDropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            CATEGORÍAS
+                        </a>
+                        {{ render(controller('App\\Controller\\GeneralController::categoriasMenu')) }}
+                    </li>
 
-                <li class="nav-item dropdown mx-1">
-                    <a class="navLinkHeader nav-link text-white dropdown-toggle" href="#" id="navbarDropdown"
-                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        CATEGORÍAS
-                    </a>
-                    {{ render(controller('App\\Controller\\GeneralController::categoriasMenu')) }}
-                </li>
+                    <li class="nav-item mx-1">
+                        <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO <i
+                                class="fas fa-plus-circle" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="navLinkHeader nav-link text-white btnSesion"
+                            href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user"
+                                aria-hidden="true"></i></a>
+                        {% else %}
+                        <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
+                            SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
+                        {% endif %}
 
-                <li class="nav-item mx-1">
-                    <a class="navLinkHeader nav-link text-white" href="{{path('evento_new')}}">PUBLICAR EVENTO <i
-                            class="fas fa-plus-circle" aria-hidden="true"></i></a>
-                </li>
-                <li class="nav-item mx-1">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="navLinkHeader nav-link text-white btnSesion"
-                        href="{{path('usuario_datos')}}">{{app.user.alias|upper}} <i class="fas fa-user"
-                            aria-hidden="true"></i></a>
-                    {% else %}
-                    <a class="navLinkHeader nav-link text-white btnSesion" href="{{path('app_login')}}">INICIAR
-                        SESIÓN <i class="fas fa-user" aria-hidden="true"></i></a>
-                    {% endif %}
-
-                </li>
+                    </li>
 
 
-            </ul>
+                </ul>
 
-
+            </div>
         </nav>
     </header>
     {% block buscador %}{% endblock %}
@@ -114,14 +118,14 @@
         <div class="col-12 titulo">{% block tituloSeccion %}{% endblock %}</div>
 
 
-        <div class="col-11 col-lg-10 contenedorContenido no-gutters">
+        <div class="col-12 col-sm-11 col-xl-10 contenedorContenido no-gutters">
             {% block contenido %}{% endblock %}
         </div>
 
     </main>
     <!-- COOKIES-->
     <div class="d-flex justify-content-center">
-        <div id="divCookies" class="alert alert-warning text-center oculto" role="alert">
+        <div id="divCookies" class="alert alert-warning col-sm-9 text-center oculto" role="alert">
             <p>
                 En esta página utilizamos cookies para mejorar la navegación de nuestros
                 usuarios y mejorar nuestros servicios. Si acepta o continúa navegando, consideramos que acepta su uso.
@@ -135,9 +139,9 @@
         <div class="col-12">
             <h4 class="mt-3"><img src="{{ asset('img/logo-negro.png') }}" height="40px" alt="" srcset=""> © 2020
             </h4>
-            <i class="fab fa-facebook fa-3x" style="color: #3b5998"></i>
-            <i class="fab fa-instagram fa-3x ml-2" style="color: #3f3f3f"></i>
-            <i class="fab fa-twitter fa-3x ml-2" style="color: #00acee"></i>
+            <a href="#"><i class="fab fa-facebook fa-3x" style="color: #3b5998"></i></a>
+            <a href="#"><i class="fab fa-instagram fa-3x ml-2" style="color: #3f3f3f"></i></a>
+            <a href="#"><i class="fab fa-twitter fa-3x ml-2" style="color: #00acee"></i></a>
             <p class="my-2">
                 <a href="#">Ver términos y condiciones</a>
             </p>
@@ -146,7 +150,7 @@
 
 
 
-    
+
     {% block javascripts %}{% endblock %}
 </body>
 

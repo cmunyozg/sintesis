@@ -5,7 +5,7 @@
 {% block contenido %}
 
 
-<div class="col-3 mx-auto text-center">
+<div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 mx-auto text-center">
 {% if error %}
 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}

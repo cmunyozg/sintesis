@@ -76,7 +76,8 @@ class EventoType extends AbstractType
                 'help' => 'Opcional.'
             ])
             ->add('categoria', null, [
-                'label' => 'Categoría'
+                'label' => 'Categoría',
+                'attr' => ['class' =>'custom-select']
             ]);
     }
 

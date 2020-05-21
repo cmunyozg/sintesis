@@ -14,7 +14,8 @@ function initMap() {
         var latLong = coordenadas.split(',');
         map = new google.maps.Map(document.getElementById('map-form'), {
             center: new google.maps.LatLng(latLong[0], latLong[1]),
-            zoom: 17
+            zoom: 17,
+            clickableIcons: false
         });
         marker = new google.maps.Marker({
             map: map,

@@ -9,11 +9,11 @@
 
     <thead>
         <tr>
-            <th>ID</th>
+            <th class="d-none d-lg-table-cell">ID</th>
             <th>Título</th>
-            <th>Inicio</th>
-            <th>Fin</th>
-            <th>Ubicación</th>
+            <th class="d-none d-sm-table-cell">Inicio</th>
+            <th class="d-none d-lg-table-cell">Fin</th>
+            <th class="d-none d-lg-table-cell">Ubicación</th>
             <th>Descripcion</th>
 
 
@@ -23,12 +23,12 @@
     <tbody>
         {% for evento in eventos %}
         <tr data-href={{path('evento_show', {'id': evento.id})}}>
-            <td class="align-middle pointer">{{ evento.id }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{ evento.id }}</td>
             <td class="align-middle pointer">{{ evento.titulo }}</td>
-            <td class="align-middle pointer">{{ evento.fechaInicio|date('d-m-Y') }}</td>
-            <td class="align-middle pointer">{{ evento.fechaFin ? evento.fechaFin|date('d-m-Y') : '-' }}</td>
-            <td class="align-middle pointer">{{ evento.ubicacion }}</td>
-            <td class="align-middle pointer">{{ evento.descripcion|slice(0,200) ~ '...' }}</td>
+            <td class="align-middle pointer d-none d-sm-table-cell">{{ evento.fechaInicio|date('d/m/Y') }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{ evento.fechaFin ? evento.fechaFin|date('d/m/Y') : '-' }}</td>
+            <td class="align-middle pointer d-none d-lg-table-cell">{{ evento.ubicacion|ubicacion }}</td>
+            <td class="align-middle pointer">{{ evento.descripcion|descripcion(15)}}</td>
 
             <td class="align-middle">
                 <span data-toggle="modal" data-target="#modalReporte" style="cursor: pointer">

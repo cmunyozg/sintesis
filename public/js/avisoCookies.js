@@ -9,8 +9,11 @@ function compruebaAceptaCookies() {
     }
 }
 
-// Guarda la variable cuando el usuario acepta las cookies y oculta la caja
+
+// Guarda la variable cuando el usuario acepta las cookies y oculta la caja.
+// Se ejecuta como evento al clickar en Aceptar Cookies
 function aceptarCookies() {
     localStorage.aceptaCookies = 'true';
     $('#divCookies').addClass("oculto");
 }
+

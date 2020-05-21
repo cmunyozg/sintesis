@@ -1,30 +1,30 @@
 {{ form_start(form) }}
 <div class="row">
-    <div class="col-8">
+    <div class="col-md-8 col-sm-6">
         {{ form_row(form.titulo) }}
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-sm-6">
         {{ form_row(form.categoria) }}
     </div>
-</div>
-<div class="row">
-    <div class="col-4">
+
+
+    <div class="col-md-4 col-sm-6">
         {{ form_row(form.fechaInicio) }}
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-sm-6">
         {{ form_row(form.hora) }}
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         {{ form_row(form.precio) }}
     </div>
 
-</div>
-<div class="row">
-    <div class="col-4">
+
+
+    <div class="col-md-4 col-sm-6">
         {{ form_row(form.fechaFin) }}
     </div>
 
-    <div class="col-4">
+    <div class="col-md-4 col-sm-6">
         <div class="form-group">
             {% if evento.imagen %}
             <div class="justify-content-between d-flex">
@@ -57,7 +57,7 @@
             {{form_widget(form.imagen)}}
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         {{ form_row(form.web) }}
     </div>
 </div>
@@ -72,7 +72,7 @@
 
     <div class="col-12">
         {{ form_errors(form.coordenadas)}}
-        <div id="map-form"></div>
+        <div class="rounded" id="map-form"></div>
         <div id="infowindow">
             <img src="" width="16" height="16" id="place-icon">
             <span id="place-name" class="title"></span><br>

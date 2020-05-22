@@ -31,16 +31,16 @@
             <td class="align-middle pointer">{{ evento.descripcion|descripcion(15)}}</td>
 
             <td class="align-middle">
-                <span data-toggle="modal" data-target="#modalReporte" style="cursor: pointer">
+                <span data-toggle="modal" data-target="#modalBloqueo{{evento.id}}" style="cursor: pointer">
                     <i class="fas fa-ban fa-lg"></i>
                 </span>&nbsp;
                 <!-- Modal Bloquear Evento-->
-                <div class="modal text-left" id="modalReporte" tabindex="-1" role="dialog"
-                    aria-labelledby="modalReporteTitle" aria-hidden="true">
+                <div class="modal text-left" id="modalBloqueo{{evento.id}}" tabindex="-1" role="dialog"
+                    aria-labelledby="modalBloqueoTitle" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalReporteTitle">Bloquear evento</h5>
+                                <h5 class="modal-title" id="modalBloqueoTitle">Bloquear evento</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

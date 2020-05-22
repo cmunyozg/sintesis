@@ -25,11 +25,11 @@
             <td class="align-middle pointer">{{ evento.mensajeModeracion }}</td>
             <td class="align-middle">
 
-                <span data-toggle="modal" data-target="#modalDesbloqueo" style="cursor: pointer">
+                <span data-toggle="modal" data-target="#modalDesbloqueo{{evento.id}}" style="cursor: pointer">
                     <i class="fas fa-check-circle fa-lg"></i>
                 </span>&nbsp;
                 <!-- Modal Desbloquear Evento -->
-                <div class="modal text-center" id="modalDesbloqueo" tabindex="-1" role="dialog"
+                <div class="modal text-center" id="modalDesbloqueo{{evento.id}}" tabindex="-1" role="dialog"
                     aria-labelledby="modalDesbloqueoTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

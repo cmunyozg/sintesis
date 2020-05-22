@@ -34,11 +34,11 @@
 
             <td class="align-middle">
                 {% if evento.visible %}
-                <span data-toggle="modal" data-target="#modalInvisible">
+                <span data-toggle="modal" data-target="#modalInvisible{{evento.id}}">
                     <i class="fas fa-eye-slash fa-lg pointer"></i>
                 </span>&nbsp;
                 <!-- Modal Invisible -->
-                <div class="modal text-left" id="modalInvisible" tabindex="-1" role="dialog"
+                <div class="modal text-left" id="modalInvisible{{evento.id}}" tabindex="-1" role="dialog"
                     aria-labelledby="modalInvisibleTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -49,8 +49,7 @@
                                 </button>
                             </div>
                             <div class="modal-body text-center">
-                                <p class="mb-3">El evento desaparecerá de tu perfil público, pero seguirá siendo accesible en el
-                                    resto de la web.</p>
+                                <p class="mb-3">El evento desaparecerá de tu perfil público y de la búsqueda de eventos, pero podrá seguir siendo accesible por alguien que conozca la dirección URL.</p>
                                 <a href="{{ path('event_visibility', {'id': evento.id}) }}"><button
                                         class="btn btn-danger">Ocultar</button></a>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
@@ -61,11 +60,11 @@
                     </div>
                 </div>
                 {% else %}
-                <span data-toggle="modal" data-target="#modalVisible">
+                <span data-toggle="modal" data-target="#modalVisible{{evento.id}}">
                     <i class="fas fa-eye fa-lg pointer"></i>
                 </span>&nbsp;
                  <!-- Modal Visible -->
-                 <div class="modal text-left" id="modalVisible" tabindex="-1" role="dialog"
+                 <div class="modal text-left" id="modalVisible{{evento.id}}" tabindex="-1" role="dialog"
                  aria-labelledby="modalVisibleTitle" aria-hidden="true">
                  <div class="modal-dialog" role="document">
                      <div class="modal-content">
@@ -76,7 +75,7 @@
                              </button>
                          </div>
                          <div class="modal-body text-center">
-                             <p class="mb-3">El evento volverá a ser visible desde tu perfil público.</p>
+                             <p class="mb-3">El evento volverá a ser visible.</p>
                              <a href="{{ path('event_visibility', {'id': evento.id}) }}"><button
                                      class="btn btn-danger">Mostrar</button></a>
                              <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">

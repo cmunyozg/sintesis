@@ -28,7 +28,7 @@ function initMap() {
             titulo: datos[1],
             id: datos[0],
             date: datos[4],
-            //icon: "https://www.pinpng.com/pngs/m/172-1721600_map-marker-comments-location-mark-icon-png-transparent.png"
+            //icon: "https:"
         });
 
         google.maps.event.addListener(marker, 'click', function () {

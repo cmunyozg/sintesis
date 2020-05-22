@@ -58,8 +58,8 @@ class EventoRepository extends ServiceEntityRepository
         if (!is_null($inicio)) $query->andWhere('e.fechaFin >= :inicio OR e.fechaInicio >= :inicio')->setParameter('inicio', $inicio);
         if (!is_null($fin)) $query->andWhere('e.fechaFin <= :fin OR e.fechaInicio <= :fin')->setParameter('fin', $fin);
         if ($gratis) $query->andWhere('e.precio = 0');
-        $query->andWhere('e.bloqueado = 0');
-        $result = $query->orderBy('e.fechaInicio', 'ASC')->getQuery()->getResult();
+        $query->andWhere('e.bloqueado = 0')->andWhere('e.visible = 1');
+        $result = $query->addOrderBy('e.fechaInicio', 'ASC')->addOrderBy('e.hora','ASC')->getQuery()->getResult();
 
         return $result;
     }

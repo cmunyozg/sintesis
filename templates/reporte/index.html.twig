@@ -22,11 +22,11 @@
             <td class="align-middle pointer">{{ reporte.descripcion }}</td>
 
             <td  class="align-middle">
-                <span data-toggle="modal" data-target="#modalReporte" style="cursor: pointer">
+                <span data-toggle="modal" data-target="#modalReporte{{reporte.id}}" style="cursor: pointer">
                     <i class="fas fa-ban fa-lg"></i>
                 </span>&nbsp;
                 <!-- Modal Bloquear Evento-->
-                <div class="modal text-left" id="modalReporte" tabindex="-1" role="dialog"
+                <div class="modal text-left" id="modalReporte{{reporte.id}}" tabindex="-1" role="dialog"
                     aria-labelledby="modalReporteTitle" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -54,11 +54,11 @@
                         </div>
                     </div>
                 </div>
-                <span data-toggle="modal" data-target="#modalBorrar" style="cursor: pointer">
+                <span data-toggle="modal" data-target="#modalBorrar{{reporte.id}}" style="cursor: pointer">
                     <i class="fas fa-trash-alt fa-lg"></i>
                 </span>
                 <!-- Modal Borrar Reporte-->
-                <div class="modal text-left" id="modalBorrar" tabindex="-1" role="dialog"
+                <div class="modal text-left" id="modalBorrar{{reporte.id}}" tabindex="-1" role="dialog"
                     aria-labelledby="modalBorrarTitle" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

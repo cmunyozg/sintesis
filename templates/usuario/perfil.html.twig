@@ -82,6 +82,9 @@
     </tbody>
 </table>
 {% endif %}
+{% if pasados is empty and actuales is empty %}
+<h4 class="text-center my-5"><strong> El usuario todavía no ha publicado ningún evento</strong></h4>
+{% endif %}
 {% endblock %}
 {% block javascripts %}
 <script src="{{asset('js/hrefTR.js')}}"></script>

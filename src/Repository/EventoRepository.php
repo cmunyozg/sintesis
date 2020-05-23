@@ -36,12 +36,15 @@ class EventoRepository extends ServiceEntityRepository
 
     /**
      * @return Evento[] Returns an array of Evento objects
+     * Busca por categoría y fecha actual
      */
     public function findByCategoria($categoriaID)
     {
         return $this->createQueryBuilder('e')
-            ->where('e.categoria = :categoria')
+            ->andWhere('e.categoria = :categoria')
+            ->andWhere('e.fechaFin >= :today OR e.fechaInicio >= :today')
             ->setParameter('categoria', $categoriaID)
+            ->setParameter('today', (new \DateTime())->format('Y-m-d'))
             ->orderBy('e.fechaInicio', 'ASC')
             ->getQuery()
             ->getResult();

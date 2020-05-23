@@ -25,10 +25,10 @@ class EventoController extends AbstractController
     /**
      * @Route("/", name="evento_index", methods={"GET"})
      * Muestra los eventos del usuario logeado
+     * @IsGranted("ROLE_USER")
      */
     public function index(EventoRepository $eventoRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('evento/index.html.twig', [
             'eventos' => $eventoRepository->findByUsuario($this->getUser()),
         ]);
@@ -196,6 +196,7 @@ class EventoController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="evento_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request, Evento $evento): Response
     {

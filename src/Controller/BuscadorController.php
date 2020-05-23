@@ -34,7 +34,7 @@ class BuscadorController extends AbstractController
 
     /**
      * @Route("/", name="buscador", methods={"POST"})
-     * 
+     * Gestiona la búsqueda de eventos mediante criterios de búsqueda
      */
     public function busqueda(Request $request, CategoriaRepository $catRepository, EventoRepository $eventRepository)
     {
@@ -67,7 +67,7 @@ class BuscadorController extends AbstractController
 
       /**
      * @Route("/cat/{idCategoria}", name="categorias", methods={"GET"})
-     * Busca todos los eventos de una categoría concreta
+     * Busca todos los eventos de una categoría concreta de fecha vigente.
      */
     public function categorias($idCategoria, EventoRepository $eventRepository, CategoriaRepository $catRepository)
     {

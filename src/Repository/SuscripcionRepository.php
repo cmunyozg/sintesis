@@ -44,6 +44,7 @@ class SuscripcionRepository extends ServiceEntityRepository
         ->innerJoin('s.usuario', 'u')
         ->where('e.fechaInicio >= :desde')
         ->andWhere('e.fechaInicio <= :hasta')
+        ->andWhere('e.bloqueado != 1')
         ->setParameter('desde', $desde->format('Y-m-d'))
         ->setParameter('hasta', $hasta->format('Y-m-d'))
         ->getQuery()
